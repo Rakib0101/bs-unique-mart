@@ -16,7 +16,7 @@ const inter = Inter({
 });
 
 const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mensstyle.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bsuniquemart.com";
 const p = content.flagshipProduct;
 
 export const viewport: Viewport = {
@@ -36,13 +36,12 @@ export const metadata: Metadata = {
   keywords: [
     content.brand.name,
     p.title,
-    "প্রিমিয়াম পোলো শার্ট",
-    "কটন পোলো শার্ট",
-    "পোলো শার্ট বাংলাদেশ",
-    "Cotton Polo Shirt",
-    "Premium Menswear",
-    "Men Fashion Bangladesh",
-    "Polo T-shirt Online",
+    "প্রিমিয়াম সানগ্লাস",
+    "স্টাইলিশ সানগ্লাস",
+    "সানগ্লাস বাংলাদেশ",
+    "Premium Sunglasses",
+    "Stylish Sunglasses BD",
+    "Sunglasses Online Bangladesh",
     "Cash on Delivery",
   ],
   authors: [{ name: content.brand.name }],
@@ -69,7 +68,7 @@ export const metadata: Metadata = {
     siteName: content.brand.name,
     images: [
       {
-        url: "/images/products/t-shirt/1.png",
+        url: p.images[0],
         width: 900,
         height: 670,
         alt: `${content.brand.name} - ${p.title}`,
@@ -80,7 +79,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${content.brand.name} | ${p.title}`,
     description: p.subtitle,
-    images: ["/images/products/t-shirt/1.png"],
+    images: [p.images[0]],
   },
   robots: {
     index: true,

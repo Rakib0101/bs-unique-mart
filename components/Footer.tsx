@@ -17,11 +17,11 @@ export default function Footer({
 					{/* Brand Logo */}
 					<div className="shrink-0">
 						<Image
-							src="/images/footer-logo.png"
-							alt="Mens Style Logo"
-							width={85}
-							height={65}
-							className="h-auto w-[75px] sm:w-[85px] object-contain"
+							src="/images/BS_Unique_Mart_Logo.png"
+							alt="BS Unique Mart"
+							width={64}
+							height={55}
+							className="h-auto w-[56px] sm:w-[64px] object-contain"
 						/>
 					</div>
 

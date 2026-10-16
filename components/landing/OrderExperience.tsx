@@ -31,7 +31,7 @@ export default function OrderExperience({
 	showRelated: boolean;
 }) {
 	const router = useRouter();
-	const [size, setSize] = useState(product.sizes[0] ?? "M");
+	const [size, setSize] = useState(product.sizes[0] ?? "");
 	const [color, setColor] = useState(product.colors[0]?.name ?? "কালো");
 	const [qty, setQty] = useState(1);
 	const [zoneLabel, setZoneLabel] = useState(deliveryZones[0]?.label ?? "");
@@ -252,27 +252,29 @@ export default function OrderExperience({
 										</div>
 
 										{/* Size Selector */}
-										<div className="mt-5">
-											<p className="text-xs font-semibold text-[#666666] mb-2.5">
-												সাইজ নির্বাচন করুন <span className="text-brand">*</span>
-											</p>
-											<div className="flex items-center gap-2.5">
-												{product.sizes.map((s) => (
-													<button
-														key={s}
-														type="button"
-														onClick={() => setSize(s)}
-														className={`h-12 w-12 sm:w-14 rounded-xl border text-sm font-semibold transition-all ${
-															size === s
-																? "border-ink bg-white text-ink ring-1 ring-ink"
-																: "border-[#E5E5E5] bg-white text-ink hover:border-ink/40"
-														}`}
-													>
-														{s}
-													</button>
-												))}
+										{product.sizes.length > 0 ? (
+											<div className="mt-5">
+												<p className="text-xs font-semibold text-[#666666] mb-2.5">
+													সাইজ নির্বাচন করুন <span className="text-brand">*</span>
+												</p>
+												<div className="flex items-center gap-2.5">
+													{product.sizes.map((s) => (
+														<button
+															key={s}
+															type="button"
+															onClick={() => setSize(s)}
+															className={`h-12 w-12 sm:w-14 rounded-xl border text-sm font-semibold transition-all ${
+																size === s
+																	? "border-ink bg-white text-ink ring-1 ring-ink"
+																	: "border-[#E5E5E5] bg-white text-ink hover:border-ink/40"
+															}`}
+														>
+															{s}
+														</button>
+													))}
+												</div>
 											</div>
-										</div>
+										) : null}
 
 										{/* Quantity Selector */}
 										<div className="mt-5 flex items-center gap-4">

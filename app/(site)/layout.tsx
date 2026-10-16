@@ -5,7 +5,7 @@ import content from "@/data/site.json";
 import { getSiteSettings } from "@/lib/settings";
 
 const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mensstyle.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bsuniquemart.com";
 const p = content.flagshipProduct;
 
 // Every page here reads site settings from the database — render on
@@ -19,11 +19,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.title,
-    image: [
-      `${siteUrl}/images/products/t-shirt/1.png`,
-      `${siteUrl}/images/products/t-shirt/banner.png`,
-      `${siteUrl}/images/products/t-shirt/zoom.png`,
-    ],
+    image: p.images.map((src) => `${siteUrl}${src}`),
     description: p.subtitle,
     sku: p.slug,
     brand: {
@@ -55,7 +51,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     "@type": "Organization",
     name: content.brand.name,
     url: siteUrl,
-    logo: `${siteUrl}/images/logo.png`,
+    logo: `${siteUrl}/images/BS_Unique_Mart_Logo.png`,
     contactPoint: {
       "@type": "ContactPoint",
       telephone: settings.phones[0] ?? content.brand.phones[0],

@@ -6,15 +6,18 @@ export default function Header() {
 	return (
 		<header className="sticky top-0 z-50 border-b border-surface-line bg-white/90 backdrop-blur">
 			<div className="container-page flex h-16 items-center justify-between gap-4">
-				<Link href="/" className="flex items-center gap-2">
+				<Link href="/" className="flex shrink-0 items-center gap-2">
 					<Image
-						src="/images/logo.png"
-						alt="Mens Style"
-						width={224}
-						height={44}
-						className="h-7 w-auto max-w-35 sm:h-9 sm:max-w-none object-contain"
+						src="/images/BS_Unique_Mart_Logo.png"
+						alt="BS Unique Mart"
+						width={48}
+						height={48}
+						className="h-8 w-8 object-contain sm:h-9 sm:w-9"
 						priority
 					/>
+					<span className="text-base font-bold text-ink sm:text-lg">
+						{content.brand.name}
+					</span>
 				</Link>
 
 				<nav className="hidden items-center gap-8 text-sm font-medium text-ink/70 md:flex">

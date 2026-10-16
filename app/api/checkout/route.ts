@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     !name?.trim() ||
     !phone?.trim() ||
     !address?.trim() ||
-    !size ||
+    (product.sizes.length > 0 && !size) ||
     !color ||
     !Number.isInteger(qty) ||
     qty < 1 ||

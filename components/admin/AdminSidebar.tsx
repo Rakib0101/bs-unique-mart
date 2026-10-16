@@ -28,11 +28,11 @@ export default function AdminSidebar({
     <aside className="fixed inset-y-0 left-0 z-20 flex w-64 shrink-0 flex-col border-r border-surface-line bg-white">
       <div className="border-b border-surface-line px-6 py-5">
         <Image
-          src="/images/logo.png"
-          alt="Mens Style"
-          width={224}
-          height={44}
-          className="h-8 w-auto max-w-35 object-contain"
+          src="/images/BS_Unique_Mart_Logo.png"
+          alt="BS Unique Mart"
+          width={40}
+          height={35}
+          className="h-8 w-auto object-contain"
           priority
         />
         <p className="mt-1.5 text-xs text-ink/50">Admin dashboard</p>

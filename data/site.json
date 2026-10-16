@@ -1,10 +1,10 @@
 {
 	"brand": {
-		"name": "Mens Style",
-		"phones": ["01711-923182", "01318-400290"],
-		"address": "Office -Block-L,Road-2,House-26, 2nd Floor, Banani, Dhaka-1213",
+		"name": "BS Unique Mart",
+		"phones": ["01826940000"],
+		"address": "Office -42/2, North Mugdapara Bashaboo, Dhaka-1214",
 		"social": {
-			"facebook": "https://www.facebook.com/profile.php?id=61577682973851&mibextid=wwXIfr&rdid=aqiYSIURaSJTzMMp&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Eau9thTkD%2F%3Fmibextid%3DwwXIfr&ref=1#"
+			"facebook": ""
 		}
 	},
 	"nav": [
@@ -21,30 +21,30 @@
 		{ "label": "নিশ্চিত কেনাকাটা" }
 	],
 	"whyChooseSection": {
-		"eyebrow": "কেন এটি আপনার জন্য",
-		"title": "স্টাইল এবং আরাম — দুটোই একসাথে",
-		"description": "দৈনন্দিন ব্যবহার থেকে শুরু করে স্মার্ট ক্যাজুয়াল লুক—প্রতিটি মুহূর্তে আরামদায়ক ও পরিপাটি থাকার জন্য ডিজাইন করা।"
+		"eyebrow": "কেন এই সানগ্লাসটি বেছে নেবেন?",
+		"title": "স্টাইল ও আরাম—দুটোই একসাথে!",
+		"description": "আধুনিক ডিজাইন ও আরামদায়ক ফিটের এই সানগ্লাস আপনার প্রতিদিনের স্টাইলকে করে তুলবে আরও আকর্ষণীয়।"
 	},
 	"whyChooseUs": [
 		{
 			"number": "01",
-			"title": "প্রিমিয়াম ফেব্রিক",
-			"desc": "নরম, শ্বাসযোগ্য এবং দীর্ঘস্থায়ী কাপড় দিয়ে তৈরি যা সারাদিন আরাম দেয়।"
+			"title": "প্রিমিয়াম ফ্রেম",
+			"desc": "স্টাইলিশ ও মজবুত ফ্রেম, যা দেখতে সুন্দর এবং ব্যবহারে আরামদায়ক।"
 		},
 		{
 			"number": "02",
-			"title": "রিল্যাক্সড ফিট",
-			"desc": "আধুনিক কাটিং যা প্রতিটি শরীরের গঠনে মানানসই ও স্বাচ্ছন্দ্যময়।"
+			"title": "আরামদায়ক ফিট",
+			"desc": "হালকা ডিজাইনের কারণে দীর্ঘ সময় পরেও সহজে ব্যবহার করা যায়।"
 		},
 		{
 			"number": "03",
-			"title": "দীর্ঘস্থায়ী রঙ",
-			"desc": "বিশেষ ডাইং প্রক্রিয়ায় রঙ দীর্ঘদিন উজ্জ্বল ও অক্ষুণ্ণ থাকে।"
+			"title": "আধুনিক স্টাইল",
+			"desc": "ট্রেন্ডি ডিজাইন যা ক্যাজুয়াল ও ফরমাল—দুই ধরনের পোশাকের সাথেই মানানসই।"
 		},
 		{
 			"number": "04",
-			"title": "স্মার্ট ফিটিং",
-			"desc": "ফরমাল কিংবা ক্যাজুয়াল—যেকোনো অনুষঙ্গে মানানসই স্মার্ট লুক।"
+			"title": "প্রতিদিনের ব্যবহার",
+			"desc": "ভ্রমণ, ড্রাইভিং, আউটডোর কিংবা দৈনন্দিন ব্যবহারের জন্য উপযোগী।"
 		}
 	],
 	"productDetailSection": {
@@ -52,103 +52,48 @@
 		"title": "প্রতিটি ডিটেইলে প্রিমিয়াম ফিনিশ"
 	},
 	"flagshipProduct": {
-		"slug": "premium-cotton-polo",
-		"title": "প্রিমিয়াম কটন পোলো শার্ট",
-		"subtitle": "আরাম, স্টাইল এবং প্রিমিয়াম ফিনিশ—প্রতিদিনের জন্য তৈরি একটি আধুনিক পোলো।",
-		"price": 1490,
-		"comparePrice": 1850,
+		"slug": "premium-stylish-sunglasses",
+		"title": "প্রিমিয়াম স্টাইলিশ সানগ্লাস",
+		"subtitle": "স্টাইলিশ ডিজাইন, আরামদায়ক ফিট এবং আধুনিক লুক—আপনার প্রতিদিনের ফ্যাশনে যোগ করুন নতুন মাত্রা।",
+		"price": 1450,
+		"comparePrice": 1750,
 		"images": [
-			"/images/products/t-shirt/1.png",
-			"/images/products/t-shirt/2.png",
-			"/images/products/t-shirt/3.png",
-			"/images/products/t-shirt/4.png",
-			"/images/products/t-shirt/5.png"
+			"/images/products/sunglass/1.png",
+			"/images/products/sunglass/2.png",
+			"/images/products/sunglass/3.png",
+			"/images/products/sunglass/4.png"
 		],
-		"sizes": ["M", "L", "XL", "XXL"],
+		"sizes": [],
 		"colors": [
-			{ "name": "কালো", "hex": "#1c1c1c" },
-			{ "name": "অফ হোয়াইট", "hex": "#efe9de" },
-			{ "name": "নেভি ব্লু", "hex": "#1d2f4e" },
-			{ "name": "লাল", "hex": "#e2371d" }
+			{ "name": "কালো", "hex": "#1a1a1a" },
+			{ "name": "অফ হোয়াইট", "hex": "#e8e4dc" },
+			{ "name": "নেভি ব্লু", "hex": "#1d2a4e" },
+			{ "name": "লাল", "hex": "#c42b2b" }
 		],
-		"rating": { "value": 4.9, "count": 545 },
+		"rating": { "value": 4.9, "count": 28 },
 		"specs": [
-			{ "label": "মেটেরিয়াল", "value": "প্রিমিয়াম কটন ব্লেন্ড" },
-			{ "label": "ফিট", "value": "রেগুলার / স্লিম ফিট" },
-			{ "label": "রঙ", "value": "নেভি ব্লু" },
-			{ "label": "ওজন", "value": "২৪০ জিএসএম কাপড়" },
-			{ "label": "সাইজ", "value": "M থেকে XXL" },
-			{ "label": "যত্ন", "value": "মেশিন ওয়াশ" }
+			{ "label": "প্রোডাক্ট", "value": "প্রিমিয়াম স্টাইলিশ সানগ্লাস" },
+			{ "label": "ফ্রেম ডিজাইন", "value": "আধুনিক স্কয়ার ফ্রেম" },
+			{ "label": "ফ্রেম কালার", "value": "ব্ল্যাক" },
+			{ "label": "লেন্স কালার", "value": "ডার্ক ব্ল্যাক" },
+			{ "label": "স্টাইল", "value": "ইউনিসেক্স" },
+			{ "label": "ব্যবহার", "value": "দৈনন্দিন, ভ্রমণ ও আউটডোর" },
+			{ "label": "ফিটিং", "value": "আরামদায়ক" }
 		],
-		"sizeChart": [
-			{ "size": "M", "chest": "40\"", "length": "27\"", "shoulder": "17\"" },
-			{ "size": "L", "chest": "42\"", "length": "28\"", "shoulder": "17.5\"" },
-			{ "size": "XL", "chest": "44\"", "length": "29\"", "shoulder": "18\"" },
-			{ "size": "XXL", "chest": "46\"", "length": "30\"", "shoulder": "18.5\"" }
-		]
+		"sizeChart": []
 	},
 	"qualityBanner": {
-		"eyebrow": "MENS STYLE QUALITY",
-		"title": "শুধু পোশাক নয়, আপনার প্রতিদিনের স্টাইল।",
-		"desc": "Mens Style তৈরি হয়েছে আধুনিক পুরুষের দৈনন্দিন প্রয়োজনকে সামনে রেখে—যেখানে ভালো ডিজাইন, আরাম এবং মান একসাথে আসে।",
-		"badges": ["Premium Quality", "Modern Fit", "Everyday Comfort"],
-		"image": "/images/products/t-shirt/banner.png"
+		"eyebrow": "",
+		"title": "শুধু সানগ্লাস নয়, আপনার স্টাইলের নতুন পরিচয়।",
+		"desc": "একটি স্টাইলিশ সানগ্লাস আপনার পুরো লুক বদলে দিতে পারে। ক্যাজুয়াল আউটফিট, ভ্রমণ কিংবা প্রতিদিনের বাইরে যাওয়া—সব সময় আপনার স্টাইলকে রাখুন আকর্ষণীয়।",
+		"badges": [],
+		"image": "/images/products/sunglass/3.png"
 	},
 	"relatedSection": {
 		"eyebrow": "আপনার পছন্দ হতে পারে",
 		"title": "আরও কিছু স্টাইল দেখুন"
 	},
-	"relatedProducts": [
-		{
-			"slug": "loose-fit-unstructured-shirt",
-			"title": "লুজ ফিট আনস্ট্রাকচার্ড শার্ট",
-			"price": 1190,
-			"comparePrice": null,
-			"images": ["/images/products/related/1.png"],
-			"sizes": ["M", "L", "XL"],
-			"colors": [
-				{ "name": "ব্রাউন", "hex": "#5a4632" },
-				{ "name": "ব্ল্যাক", "hex": "#1c1c1c" }
-			]
-		},
-		{
-			"slug": "premium-executive-shirt",
-			"title": "প্রিমিয়াম এক্সিকিউটিভ শার্ট",
-			"price": 1590,
-			"comparePrice": 1850,
-			"images": ["/images/products/related/2.png"],
-			"sizes": ["M", "L", "XL", "XXL"],
-			"colors": [
-				{ "name": "অফ হোয়াইট", "hex": "#efe9de" },
-				{ "name": "স্যান্ড", "hex": "#c9a97e" }
-			]
-		},
-		{
-			"slug": "slim-fit-denim-shirt",
-			"title": "স্লিম ফিট ডেনিম শার্ট",
-			"price": 1850,
-			"comparePrice": null,
-			"images": ["/images/products/related/3.png"],
-			"sizes": ["M", "L", "XL"],
-			"colors": [
-				{ "name": "ইন্ডিগো", "hex": "#2c3e63" },
-				{ "name": "লাইট ওয়াশ", "hex": "#7c93b3" },
-				{ "name": "ব্ল্যাক", "hex": "#1c1c1c" }
-			]
-		},
-		{
-			"slug": "casual-linen-jacket",
-			"title": "ক্যাজুয়াল লিনেন জ্যাকেট",
-			"price": 2490,
-			"comparePrice": null,
-			"images": ["/images/products/related/4.png"],
-			"sizes": ["M", "L", "XL"],
-			"colors": [
-				{ "name": "অলিভ গ্রিন", "hex": "#4a5a3c" },
-				{ "name": "খাকি", "hex": "#a1946f" }
-			]
-		}
-	],
+	"relatedProducts": [],
 	"deliveryZones": [
 		{ "label": "ঢাকা", "charge": 80 },
 		{ "label": "ঢাকার বাইরে", "charge": 120 }

@@ -1,14 +1,25 @@
 import { getDb } from "@/lib/db";
 import { products } from "@/lib/db/schema";
 import content from "@/data/site.json";
+import type { ColorOption } from "@/lib/types";
 
 const DEFAULT_HERO_CTA = "অফার প্রাইস এ অর্ডার করুন";
+
+type RelatedProduct = {
+  slug: string;
+  title: string;
+  price: number;
+  comparePrice: number | null;
+  images: string[];
+  sizes: string[];
+  colors: ColorOption[];
+};
 
 async function main() {
   const db = getDb();
 
   const flagship = content.flagshipProduct;
-  const related = content.relatedProducts;
+  const related = content.relatedProducts as RelatedProduct[];
 
   await db
     .insert(products)
@@ -29,11 +40,11 @@ async function main() {
       isFlagship: true,
       sortOrder: 0,
       heroCtaLabel: DEFAULT_HERO_CTA,
-      whyChooseUs: [],
-      qualityBannerTitle: "",
-      qualityBannerDesc: "",
-      qualityBannerBadges: [],
-      qualityBannerImage: "",
+      whyChooseUs: content.whyChooseUs,
+      qualityBannerTitle: content.qualityBanner.title,
+      qualityBannerDesc: content.qualityBanner.desc,
+      qualityBannerBadges: content.qualityBanner.badges,
+      qualityBannerImage: content.qualityBanner.image,
     });
 
   for (let i = 0; i < related.length; i++) {

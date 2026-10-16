@@ -43,31 +43,33 @@ export default function ProductDetail({ product: p }: { product: Product }) {
 						))}
 					</dl>
 
-					<div className="mt-8 overflow-x-auto rounded-xl border border-surface-line">
-						<table className="w-full min-w-90 border-collapse text-sm">
-							<thead>
-								<tr className="bg-ink text-white">
-									<th className="px-6 py-2 text-left font-medium">সাইজ</th>
-									<th className="px-6 py-2 text-left font-medium">চেস্ট</th>
-									<th className="px-6 py-2 text-left font-medium">লেংথ</th>
-									<th className="px-6 py-2 text-left font-medium">শোল্ডার</th>
-								</tr>
-							</thead>
-							<tbody>
-								{p.sizeChart.map((row, i) => (
-									<tr
-										key={row.size}
-										className={i % 2 === 0 ? "bg-surface-muted" : "bg-white"}
-									>
-										<td className="px-6 py-2 font-medium">{row.size}</td>
-										<td className="px-6 py-2">{row.chest}</td>
-										<td className="px-6 py-2">{row.length}</td>
-										<td className="px-6 py-2">{row.shoulder}</td>
+					{p.sizeChart.length > 0 ? (
+						<div className="mt-8 overflow-x-auto rounded-xl border border-surface-line">
+							<table className="w-full min-w-90 border-collapse text-sm">
+								<thead>
+									<tr className="bg-ink text-white">
+										<th className="px-6 py-2 text-left font-medium">সাইজ</th>
+										<th className="px-6 py-2 text-left font-medium">চেস্ট</th>
+										<th className="px-6 py-2 text-left font-medium">লেংথ</th>
+										<th className="px-6 py-2 text-left font-medium">শোল্ডার</th>
 									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
+								</thead>
+								<tbody>
+									{p.sizeChart.map((row, i) => (
+										<tr
+											key={row.size}
+											className={i % 2 === 0 ? "bg-surface-muted" : "bg-white"}
+										>
+											<td className="px-6 py-2 font-medium">{row.size}</td>
+											<td className="px-6 py-2">{row.chest}</td>
+											<td className="px-6 py-2">{row.length}</td>
+											<td className="px-6 py-2">{row.shoulder}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					) : null}
 				</div>
 			</div>
 		</section>
