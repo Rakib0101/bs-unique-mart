@@ -38,6 +38,14 @@ export default function AdminSidebar({
           priority
         />
         <p className="mt-1.5 text-xs text-ink/50">Admin dashboard</p>
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 block rounded-lg border border-surface-line px-3 py-1.5 text-center text-xs font-medium text-ink/70 hover:bg-surface-muted hover:text-ink"
+        >
+          View site ↗
+        </a>
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-4">
