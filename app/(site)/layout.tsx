@@ -8,6 +8,10 @@ const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mensstyle.com";
 const p = content.flagshipProduct;
 
+// Every page here reads site settings from the database — render on
+// request instead of at build time, so CI builds never need DB access.
+export const dynamic = "force-dynamic";
+
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
 

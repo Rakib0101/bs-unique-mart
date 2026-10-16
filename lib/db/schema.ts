@@ -1,6 +1,5 @@
 import {
   mysqlTable,
-  serial,
   text,
   varchar,
   int,
@@ -17,7 +16,7 @@ export type SizeChartRow = { size: string; chest: string; length: string; should
 export type WhyChooseItem = { number: string; title: string; desc: string };
 
 export const products = mysqlTable("products", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   title: text("title").notNull(),
   subtitle: text("subtitle").notNull(),
@@ -49,7 +48,7 @@ export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
 
 export const users = mysqlTable("users", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   username: varchar("username", { length: 255 }).notNull().unique(),
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
   role: mysqlEnum("role", ["admin", "staff"]).notNull().default("staff"),
@@ -65,7 +64,7 @@ export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 
 export const orders = mysqlTable("orders", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   productSlug: varchar("product_slug", { length: 255 }).notNull(),
   productTitle: text("product_title").notNull(),
   size: varchar("size", { length: 64 }).notNull(),
@@ -91,7 +90,7 @@ export type NewOrder = typeof orders.$inferInsert;
 export type DeliveryZone = { label: string; charge: number };
 
 export const siteSettings = mysqlTable("site_settings", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   phones: json("phones").$type<string[]>().notNull(),
   address: text("address").notNull(),
   facebookUrl: text("facebook_url").notNull(),
