@@ -32,7 +32,7 @@ export default function OrderExperience({
 }) {
 	const router = useRouter();
 	const [size, setSize] = useState(product.sizes[0] ?? "");
-	const [color, setColor] = useState(product.colors[0]?.name ?? "কালো");
+	const [color, setColor] = useState(product.colors[0]?.name ?? "");
 	const [qty, setQty] = useState(1);
 	const [zoneLabel, setZoneLabel] = useState(deliveryZones[0]?.label ?? "");
 	const [name, setName] = useState("");
@@ -225,31 +225,33 @@ export default function OrderExperience({
 										</div>
 
 										{/* Color Selector */}
-										<div className="mt-5">
-											<p className="text-xs font-semibold text-[#666666] mb-2.5">
-												রঙ নির্বাচন করুন
-											</p>
-											<div className="flex items-center gap-3">
-												{product.colors.map((c) => (
-													<button
-														key={c.name}
-														type="button"
-														onClick={() => setColor(c.name)}
-														className={`relative h-9 w-9 rounded-full transition-all flex items-center justify-center ${
-															color === c.name
-																? "ring-2 ring-brand ring-offset-2"
-																: "hover:scale-105"
-														}`}
-														aria-label={c.name}
-													>
-														<span
-															className="h-full w-full rounded-full border border-black/10"
-															style={{ backgroundColor: c.hex }}
-														/>
-													</button>
-												))}
+										{product.colors.length > 0 ? (
+											<div className="mt-5">
+												<p className="text-xs font-semibold text-[#666666] mb-2.5">
+													রঙ নির্বাচন করুন
+												</p>
+												<div className="flex items-center gap-3">
+													{product.colors.map((c) => (
+														<button
+															key={c.name}
+															type="button"
+															onClick={() => setColor(c.name)}
+															className={`relative h-9 w-9 rounded-full transition-all flex items-center justify-center ${
+																color === c.name
+																	? "ring-2 ring-brand ring-offset-2"
+																	: "hover:scale-105"
+															}`}
+															aria-label={c.name}
+														>
+															<span
+																className="h-full w-full rounded-full border border-black/10"
+																style={{ backgroundColor: c.hex }}
+															/>
+														</button>
+													))}
+												</div>
 											</div>
-										</div>
+										) : null}
 
 										{/* Size Selector */}
 										{product.sizes.length > 0 ? (
@@ -454,9 +456,9 @@ export default function OrderExperience({
 									<p className="text-sm font-bold text-ink truncate">
 										{product.title}
 									</p>
-									<p className="text-xs text-[#737373] mt-0.5">
-										{color || "কালো"}
-									</p>
+									{color ? (
+										<p className="text-xs text-[#737373] mt-0.5">{color}</p>
+									) : null}
 								</div>
 							</div>
 

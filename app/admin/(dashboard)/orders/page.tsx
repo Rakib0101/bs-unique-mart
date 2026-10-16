@@ -46,7 +46,12 @@ export default async function OrdersPage() {
                 <Cell muted>{formatDhakaDateTime(order.createdAt)}</Cell>
                 <Cell>
                   <span className="font-medium text-ink">{order.productTitle}</span>
-                  <span className="text-ink/40"> · {order.size}/{order.color}</span>
+                  {[order.size, order.color].filter(Boolean).length > 0 ? (
+                    <span className="text-ink/40">
+                      {" "}
+                      · {[order.size, order.color].filter(Boolean).join("/")}
+                    </span>
+                  ) : null}
                 </Cell>
                 <Cell>{order.customerName}</Cell>
                 <Cell>{order.customerPhone}</Cell>

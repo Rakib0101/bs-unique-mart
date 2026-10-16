@@ -46,8 +46,8 @@ export default async function OrderDetailPage({
             Placed {formatDhakaDateTime(order.createdAt)}
           </p>
           <div className="divide-y divide-surface-line">
-            <Row label="Size" value={order.size} />
-            <Row label="Color" value={order.color} />
+            {order.size ? <Row label="Size" value={order.size} /> : null}
+            {order.color ? <Row label="Color" value={order.color} /> : null}
             <Row label="Quantity" value={order.qty} />
             <Row label="Unit price" value={formatPrice(order.unitPrice)} />
             <Row

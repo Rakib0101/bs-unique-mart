@@ -168,10 +168,15 @@ function readProductFields(formData: FormData) {
   const ratingCount = Number(formData.get("ratingCount") || 0);
   const isFlagship = formData.get("isFlagship") === "on";
 
-  const colors = readRows(formData, ["colorName", "colorHex"]).map((r) => ({
-    name: r.colorName,
-    hex: r.colorHex || "#1c1c1c",
-  }));
+  // A <input type="color"> always carries a value even when untouched, so
+  // readRows' generic "any field filled" check can't tell an intentional
+  // color variant apart from a blank row — require the name explicitly.
+  const colors = readRows(formData, ["colorName", "colorHex"])
+    .filter((r) => r.colorName)
+    .map((r) => ({
+      name: r.colorName,
+      hex: r.colorHex || "#1c1c1c",
+    }));
   const specs = readRows(formData, ["specLabel", "specValue"]).map((r) => ({
     label: r.specLabel,
     value: r.specValue,

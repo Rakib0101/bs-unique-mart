@@ -18,7 +18,7 @@ export default function ProductForm({
   product?: Product;
   submitLabel: string;
 }) {
-  const colors = useRows(product?.colors.length || 1);
+  const colors = useRows(product?.colors.length || 0);
   const specs = useRows(product?.specs.length || 0);
   const sizeChart = useRows(product?.sizeChart.length || 0);
   const whyItems = useRows(product?.whyChooseUs.length || 0);

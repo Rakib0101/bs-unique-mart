@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     !phone?.trim() ||
     !address?.trim() ||
     (product.sizes.length > 0 && !size) ||
-    !color ||
+    (product.colors.length > 0 && !color) ||
     !Number.isInteger(qty) ||
     qty < 1 ||
     qty > 10
