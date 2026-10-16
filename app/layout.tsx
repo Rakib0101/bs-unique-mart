@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Hind_Siliguri, Inter } from "next/font/google";
+import { Hind_Siliguri, Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import content from "@/data/site.json";
 import { getSiteSettings } from "@/lib/settings";
@@ -14,6 +14,13 @@ const hindSiliguri = Hind_Siliguri({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["700"],
+  display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bsuniquemart.com";
@@ -107,7 +114,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="bn"
-      className={`${hindSiliguri.variable} ${inter.variable} h-full`}
+      className={`${hindSiliguri.variable} ${inter.variable} ${outfit.variable} h-full`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />

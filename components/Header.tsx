@@ -15,7 +15,7 @@ export default function Header({ logoUrl }: { logoUrl?: string }) {
 						className="h-8 w-8 object-contain sm:h-9 sm:w-9"
 						priority
 					/>
-					<span className="text-base font-bold text-ink sm:text-lg">
+					<span className="font-[family-name:var(--font-outfit)] text-[36px] font-bold text-ink">
 						{content.brand.name}
 					</span>
 				</Link>
