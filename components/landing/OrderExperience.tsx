@@ -156,7 +156,7 @@ export default function OrderExperience({
 			) : null}
 
 			{/* 100% Figma Match Checkout Form Section */}
-			<section id="order" className="scroll-mt-10 py-10 sm:py-16 bg-[#F7F7F5]">
+			<section id="order" className="scroll-mt-10 py-10 sm:py-16 bg-[#FDDDCE]">
 				<div className="container-page">
 					<form
 						onSubmit={handleSubmit}

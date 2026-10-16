@@ -3,7 +3,7 @@ import type { WhyChooseItem } from "@/lib/db/schema";
 
 export default function WhyChooseUs({ items }: { items: WhyChooseItem[] }) {
 	return (
-		<section id="why-choose-us" className="py-16 sm:py-24 bg-[#F7F7F5]">
+		<section id="why-choose-us" className="py-16 sm:py-24 bg-[#FDDDCE]">
 			<div className="container-page text-center">
 				<p className="text-xl font-semibold uppercase tracking-wide text-brand">
 					{content.whyChooseSection.eyebrow}

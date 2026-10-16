@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Product } from "@/lib/db/schema";
 import HeroGallery from "./HeroGallery";
 
@@ -6,19 +5,10 @@ export default function Hero({ product: p }: { product: Product }) {
 	const savings = p.comparePrice ? p.comparePrice - p.price : 0;
 
 	return (
-		<section className="relative overflow-hidden bg-ink text-white">
-			{/* Brand pattern background */}
-			<div className="pointer-events-none absolute inset-0 select-none" aria-hidden="true">
-				<Image
-					src="/images/hero-bg.png"
-					alt=""
-					fill
-					sizes="100vw"
-					priority
-					className="object-cover object-center"
-				/>
-			</div>
-
+		<section
+			className="relative overflow-hidden text-white"
+			style={{ background: "linear-gradient(180deg, #212121 0%, #878787 100%)" }}
+		>
 			<div className="container-page relative z-10 py-12 text-center sm:py-16">
 				<div className="mx-auto max-w-5xl">
 					<h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
