@@ -2,12 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "*.public.blob.vercel-storage.com",
-      },
-    ],
+    // Self-hosted on cPanel, so skip Next's optimizer (needs `sharp`, not
+    // guaranteed on shared hosting) — images are served as-is.
+    unoptimized: true,
   },
 };
 

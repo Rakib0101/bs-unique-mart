@@ -20,6 +20,9 @@
 # production
 /build
 
+# user-uploaded files (live on the server, not in git)
+/public/uploads
+
 # misc
 .DS_Store
 ._*

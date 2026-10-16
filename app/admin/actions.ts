@@ -1,7 +1,7 @@
 "use server";
 
 import { eq, count } from "drizzle-orm";
-import { put } from "@vercel/blob";
+import { saveUpload } from "@/lib/uploads";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDb } from "@/lib/db";
@@ -130,11 +130,7 @@ async function uploadNewImages(files: FormDataEntryValue[]) {
   const urls: string[] = [];
   for (const file of files) {
     if (!(file instanceof File) || file.size === 0) continue;
-    const blob = await put(`products/${file.name}`, file, {
-      access: "public",
-      addRandomSuffix: true,
-    });
-    urls.push(blob.url);
+    urls.push(await saveUpload(file, "products"));
   }
   return urls;
 }
@@ -363,11 +359,7 @@ export async function updateOrderStatusAction(id: number, formData: FormData) {
 
 async function uploadSingleImage(file: FormDataEntryValue | null, fallback: string) {
   if (!(file instanceof File) || file.size === 0) return fallback;
-  const blob = await put(`settings/${file.name}`, file, {
-    access: "public",
-    addRandomSuffix: true,
-  });
-  return blob.url;
+  return saveUpload(file, "settings");
 }
 
 export async function updateSettingsAction(formData: FormData) {
