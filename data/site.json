@@ -1,0 +1,186 @@
+{
+	"brand": {
+		"name": "Mens Style",
+		"phones": ["01711-923182", "01318-400290"],
+		"address": "Office -Block-L,Road-2,House-26, 2nd Floor, Banani, Dhaka-1213",
+		"social": {
+			"facebook": "https://www.facebook.com/profile.php?id=61577682973851&mibextid=wwXIfr&rdid=aqiYSIURaSJTzMMp&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Eau9thTkD%2F%3Fmibextid%3DwwXIfr&ref=1#"
+		}
+	},
+	"nav": [
+		{ "label": "প্রোডাক্ট", "href": "#order" },
+		{ "label": "বৈশিষ্ট্য", "href": "#why-choose-us" },
+		{ "label": "প্রতিক্রিয়া", "href": "#related" }
+	],
+	"ctaLabel": "এখনই অর্ডার করুন",
+	"highlights": [
+		{ "label": "উন্নত মান" },
+		{ "label": "আধুনিক স্টাইল" },
+		{ "label": "সহজ অর্ডার" },
+		{ "label": "দ্রুত ডেলিভারি" },
+		{ "label": "নিশ্চিত কেনাকাটা" }
+	],
+	"whyChooseSection": {
+		"eyebrow": "কেন এটি আপনার জন্য",
+		"title": "স্টাইল এবং আরাম — দুটোই একসাথে",
+		"description": "দৈনন্দিন ব্যবহার থেকে শুরু করে স্মার্ট ক্যাজুয়াল লুক—প্রতিটি মুহূর্তে আরামদায়ক ও পরিপাটি থাকার জন্য ডিজাইন করা।"
+	},
+	"whyChooseUs": [
+		{
+			"number": "01",
+			"title": "প্রিমিয়াম ফেব্রিক",
+			"desc": "নরম, শ্বাসযোগ্য এবং দীর্ঘস্থায়ী কাপড় দিয়ে তৈরি যা সারাদিন আরাম দেয়।"
+		},
+		{
+			"number": "02",
+			"title": "রিল্যাক্সড ফিট",
+			"desc": "আধুনিক কাটিং যা প্রতিটি শরীরের গঠনে মানানসই ও স্বাচ্ছন্দ্যময়।"
+		},
+		{
+			"number": "03",
+			"title": "দীর্ঘস্থায়ী রঙ",
+			"desc": "বিশেষ ডাইং প্রক্রিয়ায় রঙ দীর্ঘদিন উজ্জ্বল ও অক্ষুণ্ণ থাকে।"
+		},
+		{
+			"number": "04",
+			"title": "স্মার্ট ফিটিং",
+			"desc": "ফরমাল কিংবা ক্যাজুয়াল—যেকোনো অনুষঙ্গে মানানসই স্মার্ট লুক।"
+		}
+	],
+	"productDetailSection": {
+		"eyebrow": "ডিটেইল",
+		"title": "প্রতিটি ডিটেইলে প্রিমিয়াম ফিনিশ"
+	},
+	"flagshipProduct": {
+		"slug": "premium-cotton-polo",
+		"title": "প্রিমিয়াম কটন পোলো শার্ট",
+		"subtitle": "আরাম, স্টাইল এবং প্রিমিয়াম ফিনিশ—প্রতিদিনের জন্য তৈরি একটি আধুনিক পোলো।",
+		"price": 1490,
+		"comparePrice": 1850,
+		"images": [
+			"/images/products/t-shirt/1.png",
+			"/images/products/t-shirt/2.png",
+			"/images/products/t-shirt/3.png",
+			"/images/products/t-shirt/4.png",
+			"/images/products/t-shirt/5.png"
+		],
+		"sizes": ["M", "L", "XL", "XXL"],
+		"colors": [
+			{ "name": "কালো", "hex": "#1c1c1c" },
+			{ "name": "অফ হোয়াইট", "hex": "#efe9de" },
+			{ "name": "নেভি ব্লু", "hex": "#1d2f4e" },
+			{ "name": "লাল", "hex": "#e2371d" }
+		],
+		"rating": { "value": 4.9, "count": 545 },
+		"specs": [
+			{ "label": "মেটেরিয়াল", "value": "প্রিমিয়াম কটন ব্লেন্ড" },
+			{ "label": "ফিট", "value": "রেগুলার / স্লিম ফিট" },
+			{ "label": "রঙ", "value": "নেভি ব্লু" },
+			{ "label": "ওজন", "value": "২৪০ জিএসএম কাপড়" },
+			{ "label": "সাইজ", "value": "M থেকে XXL" },
+			{ "label": "যত্ন", "value": "মেশিন ওয়াশ" }
+		],
+		"sizeChart": [
+			{ "size": "M", "chest": "40\"", "length": "27\"", "shoulder": "17\"" },
+			{ "size": "L", "chest": "42\"", "length": "28\"", "shoulder": "17.5\"" },
+			{ "size": "XL", "chest": "44\"", "length": "29\"", "shoulder": "18\"" },
+			{ "size": "XXL", "chest": "46\"", "length": "30\"", "shoulder": "18.5\"" }
+		]
+	},
+	"qualityBanner": {
+		"eyebrow": "MENS STYLE QUALITY",
+		"title": "শুধু পোশাক নয়, আপনার প্রতিদিনের স্টাইল।",
+		"desc": "Mens Style তৈরি হয়েছে আধুনিক পুরুষের দৈনন্দিন প্রয়োজনকে সামনে রেখে—যেখানে ভালো ডিজাইন, আরাম এবং মান একসাথে আসে।",
+		"badges": ["Premium Quality", "Modern Fit", "Everyday Comfort"],
+		"image": "/images/products/t-shirt/banner.png"
+	},
+	"relatedSection": {
+		"eyebrow": "আপনার পছন্দ হতে পারে",
+		"title": "আরও কিছু স্টাইল দেখুন"
+	},
+	"relatedProducts": [
+		{
+			"slug": "loose-fit-unstructured-shirt",
+			"title": "লুজ ফিট আনস্ট্রাকচার্ড শার্ট",
+			"price": 1190,
+			"comparePrice": null,
+			"images": ["/images/products/related/1.png"],
+			"sizes": ["M", "L", "XL"],
+			"colors": [
+				{ "name": "ব্রাউন", "hex": "#5a4632" },
+				{ "name": "ব্ল্যাক", "hex": "#1c1c1c" }
+			]
+		},
+		{
+			"slug": "premium-executive-shirt",
+			"title": "প্রিমিয়াম এক্সিকিউটিভ শার্ট",
+			"price": 1590,
+			"comparePrice": 1850,
+			"images": ["/images/products/related/2.png"],
+			"sizes": ["M", "L", "XL", "XXL"],
+			"colors": [
+				{ "name": "অফ হোয়াইট", "hex": "#efe9de" },
+				{ "name": "স্যান্ড", "hex": "#c9a97e" }
+			]
+		},
+		{
+			"slug": "slim-fit-denim-shirt",
+			"title": "স্লিম ফিট ডেনিম শার্ট",
+			"price": 1850,
+			"comparePrice": null,
+			"images": ["/images/products/related/3.png"],
+			"sizes": ["M", "L", "XL"],
+			"colors": [
+				{ "name": "ইন্ডিগো", "hex": "#2c3e63" },
+				{ "name": "লাইট ওয়াশ", "hex": "#7c93b3" },
+				{ "name": "ব্ল্যাক", "hex": "#1c1c1c" }
+			]
+		},
+		{
+			"slug": "casual-linen-jacket",
+			"title": "ক্যাজুয়াল লিনেন জ্যাকেট",
+			"price": 2490,
+			"comparePrice": null,
+			"images": ["/images/products/related/4.png"],
+			"sizes": ["M", "L", "XL"],
+			"colors": [
+				{ "name": "অলিভ গ্রিন", "hex": "#4a5a3c" },
+				{ "name": "খাকি", "hex": "#a1946f" }
+			]
+		}
+	],
+	"deliveryZones": [
+		{ "label": "ঢাকা", "charge": 80 },
+		{ "label": "ঢাকার বাইরে", "charge": 120 }
+	],
+	"orderSection": {
+		"eyebrow": "সহজে অর্ডার করুন",
+		"title": "আপনার অর্ডার সম্পন্ন করুন",
+		"subtitle": "নিচের ফর্মটি পূরণ করুন, আমরা দ্রুত আপনার সাথে যোগাযোগ করে অর্ডার নিশ্চিত করব।",
+		"yourProductLabel": "আপনার প্রোডাক্ট",
+		"sizeLabel": "সাইজ নির্বাচন করুন",
+		"colorLabel": "কালার নির্বাচন করুন",
+		"qtyLabel": "পরিমাণ",
+		"formTitle": "আপনার তথ্য দিন",
+		"nameLabel": "আপনার নাম",
+		"namePlaceholder": "আপনার সম্পূর্ণ নাম লিখুন",
+		"phoneLabel": "মোবাইল নম্বর",
+		"phonePlaceholder": "01XXXXXXXXX",
+		"zoneLabel": "ডেলিভারি এলাকা",
+		"addressLabel": "সম্পূর্ণ ঠিকানা",
+		"addressPlaceholder": "বাসা/রোড/এলাকা/থানা/জেলা",
+		"summaryTitle": "আপনার অর্ডার",
+		"subtotalLabel": "সাবটোটাল",
+		"deliveryLabel": "ডেলিভারি চার্জ",
+		"totalLabel": "সর্বমোট",
+		"codNote": "ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে মূল্য পরিশোধ করুন",
+		"submitLabel": "অর্ডার নিশ্চিত করুন",
+		"submittingLabel": "অর্ডার হচ্ছে...",
+		"afterSubmitNote": "আমরা শীঘ্রই কল করে আপনার অর্ডার কনফার্ম করব।"
+	},
+	"orderSuccess": {
+		"title": "ধন্যবাদ! আপনার অর্ডারটি সম্পন্ন হয়েছে",
+		"body": "আমরা শীঘ্রই আপনার দেওয়া নম্বরে কল করে অর্ডার কনফার্ম করব। কোনো প্রশ্ন থাকলে আমাদের সাথে যোগাযোগ করুন।",
+		"backLabel": "হোম পেজে ফিরে যান"
+	}
+}
