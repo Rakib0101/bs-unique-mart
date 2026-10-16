@@ -61,12 +61,12 @@ export async function POST(request: Request) {
   const deliveryCharge = zone.charge;
   const totalPrice = unitPrice * qty + deliveryCharge;
 
-  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-  const webhookSecret = process.env.GOOGLE_SHEETS_WEBHOOK_SECRET;
+  const webhookUrl = settings.googleSheetsWebhookUrl;
+  const webhookSecret = settings.googleSheetsWebhookSecret;
 
   if (!webhookUrl || !webhookSecret) {
     console.error(
-      "Checkout: missing GOOGLE_SHEETS_WEBHOOK_URL/GOOGLE_SHEETS_WEBHOOK_SECRET env vars.",
+      "Checkout: Google Sheets webhook not configured (set it in Admin → Settings).",
     );
     return Response.json(
       { error: "Ordering is not configured yet. Please try again later." },

@@ -1,9 +1,11 @@
 "use client";
 
 import type { Product } from "@/lib/db/schema";
+import { DEFAULT_SECTIONS } from "@/lib/db/schema";
 import FilePreviewInput from "@/components/admin/FilePreviewInput";
 import { Field, RowSection, SectionHeader, inputCls, useRows } from "@/components/admin/form-helpers";
 import ToggleSwitch from "@/components/admin/ToggleSwitch";
+import SectionOrderEditor from "@/components/admin/SectionOrderEditor";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -118,21 +120,19 @@ export default function ProductForm({
         <div className="space-y-5">
           <section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
             <SectionHeader
-              title="This product's page sections"
-              description="Turn optional sections on or off for this product's page without losing their content."
+              title="Page layout"
+              description="Drag to reorder, untick to hide — without losing any of the content underneath."
             />
-            <div className="space-y-2.5">
-              <ToggleSwitch
-                name="showQualityBanner"
-                defaultChecked={product?.showQualityBanner ?? true}
-                label="Quality banner"
-                description="The dark banner with badges and a photo, shown below the product details."
-              />
+            <SectionOrderEditor
+              name="sections"
+              defaultValue={product?.sections ?? DEFAULT_SECTIONS}
+            />
+            <div className="border-t border-surface-line pt-2.5">
               <ToggleSwitch
                 name="showRelatedProducts"
                 defaultChecked={product?.showRelatedProducts ?? true}
                 label="Related products"
-                description="The “related styles” grid linking to your other products."
+                description="The “related styles” grid linking to your other products, shown just above the order form."
               />
             </div>
           </section>
@@ -234,12 +234,11 @@ export default function ProductForm({
             )}
           />
 
-          <section
-            className={`space-y-3 rounded-xl border border-surface-line bg-white p-5 ${
-              (product?.showQualityBanner ?? true) ? "" : "opacity-50"
-            }`}
-          >
-            <SectionHeader title="Quality banner" description="Shown below the product details." />
+          <section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
+            <SectionHeader
+              title="Quality banner content"
+              description="Visibility and position are controlled by “Page layout” above."
+            />
             <Field label="Title">
               <input
                 name="qualityBannerTitle"

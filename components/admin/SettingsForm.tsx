@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import type { SiteSettings } from "@/lib/db/schema";
 import { Field, RowSection, SectionHeader, inputCls, useRows } from "@/components/admin/form-helpers";
+import FilePreviewInput from "@/components/admin/FilePreviewInput";
 
 export default function SettingsForm({
   action,
@@ -15,6 +17,76 @@ export default function SettingsForm({
   return (
     <form action={action} className="max-w-4xl">
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <section className="space-y-4 rounded-xl border border-surface-line bg-white p-5">
+          <SectionHeader
+            title="Branding"
+            description="Applies across the whole site immediately — no redeploy needed."
+          />
+          <Field label="Logo">
+            {settings.logoUrl ? (
+              <div className="mb-2 flex h-14 w-14 items-center justify-center overflow-hidden rounded-lg bg-surface-muted">
+                <Image src={settings.logoUrl} alt="" width={56} height={56} className="object-contain" />
+              </div>
+            ) : null}
+            <input type="hidden" name="currentLogoUrl" value={settings.logoUrl} />
+            <FilePreviewInput name="logo" />
+          </Field>
+          <Field label="Favicon">
+            {settings.faviconUrl ? (
+              <div className="mb-2 flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-surface-muted">
+                <Image src={settings.faviconUrl} alt="" width={40} height={40} className="object-contain" />
+              </div>
+            ) : null}
+            <input type="hidden" name="currentFaviconUrl" value={settings.faviconUrl} />
+            <FilePreviewInput name="favicon" />
+          </Field>
+          <Field label="Primary color">
+            <div className="flex items-center gap-3">
+              <input
+                type="color"
+                name="primaryColor"
+                defaultValue={settings.primaryColor || "#e21c34"}
+                className="h-10 w-14 rounded-md border border-surface-line"
+              />
+              <span className="text-xs text-ink/50">
+                Buttons, prices, and accents site-wide.
+              </span>
+            </div>
+          </Field>
+        </section>
+
+        <section className="space-y-4 rounded-xl border border-surface-line bg-white p-5">
+          <SectionHeader
+            title="Integrations"
+            description="Connect or disconnect without touching code."
+          />
+          <Field label="Facebook Pixel ID">
+            <input
+              name="fbPixelId"
+              placeholder="Leave blank to disable"
+              defaultValue={settings.fbPixelId}
+              className={`${inputCls} w-full`}
+            />
+          </Field>
+          <Field label="Google Sheets webhook URL">
+            <input
+              name="googleSheetsWebhookUrl"
+              placeholder="Leave blank to disable order syncing"
+              defaultValue={settings.googleSheetsWebhookUrl}
+              className={`${inputCls} w-full`}
+            />
+          </Field>
+          <Field label="Google Sheets webhook secret">
+            <input
+              name="googleSheetsWebhookSecret"
+              type="password"
+              placeholder={settings.googleSheetsWebhookSecret ? "••••••••" : "Leave blank to disable"}
+              defaultValue={settings.googleSheetsWebhookSecret}
+              className={`${inputCls} w-full`}
+            />
+          </Field>
+        </section>
+
         <section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
           <SectionHeader
             title="Contact info"

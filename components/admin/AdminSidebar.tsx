@@ -18,9 +18,11 @@ const NAV_ITEMS = [
 export default function AdminSidebar({
   username,
   role,
+  logoUrl,
 }: {
   username: string;
   role: Role;
+  logoUrl?: string;
 }) {
   const pathname = usePathname();
 
@@ -28,7 +30,7 @@ export default function AdminSidebar({
     <aside className="fixed inset-y-0 left-0 z-20 flex w-64 shrink-0 flex-col border-r border-surface-line bg-white">
       <div className="border-b border-surface-line px-6 py-5">
         <Image
-          src="/images/BS_Unique_Mart_Logo.png"
+          src={logoUrl || "/images/BS_Unique_Mart_Logo.png"}
           alt="BS Unique Mart"
           width={40}
           height={35}

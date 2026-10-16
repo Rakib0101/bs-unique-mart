@@ -14,6 +14,11 @@ async function main() {
       address: content.brand.address,
       facebookUrl: content.brand.social.facebook ?? "",
       deliveryZones: content.deliveryZones,
+      logoUrl: "",
+      faviconUrl: "",
+      fbPixelId: "",
+      googleSheetsWebhookUrl: "",
+      googleSheetsWebhookSecret: "",
     });
 
   console.log("Seeded site settings.");

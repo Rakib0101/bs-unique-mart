@@ -1,5 +1,5 @@
 import { getDb } from "@/lib/db";
-import { products } from "@/lib/db/schema";
+import { products, DEFAULT_SECTIONS } from "@/lib/db/schema";
 import content from "@/data/site.json";
 import type { ColorOption } from "@/lib/types";
 
@@ -45,6 +45,7 @@ async function main() {
       qualityBannerDesc: content.qualityBanner.desc,
       qualityBannerBadges: content.qualityBanner.badges,
       qualityBannerImage: content.qualityBanner.image,
+      sections: DEFAULT_SECTIONS,
     });
 
   for (let i = 0; i < related.length; i++) {
@@ -71,6 +72,7 @@ async function main() {
         qualityBannerDesc: "",
         qualityBannerBadges: [],
         qualityBannerImage: "",
+        sections: DEFAULT_SECTIONS,
       });
   }
 

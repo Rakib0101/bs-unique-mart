@@ -1,10 +1,12 @@
 import Image from "next/image";
 
 export default function Footer({
+	logoUrl,
 	phones,
 	address,
 	facebookUrl,
 }: {
+	logoUrl?: string;
 	phones: string[];
 	address: string;
 	facebookUrl: string;
@@ -17,7 +19,7 @@ export default function Footer({
 					{/* Brand Logo */}
 					<div className="shrink-0">
 						<Image
-							src="/images/BS_Unique_Mart_Logo.png"
+							src={logoUrl || "/images/BS_Unique_Mart_Logo.png"}
 							alt="BS Unique Mart"
 							width={64}
 							height={55}

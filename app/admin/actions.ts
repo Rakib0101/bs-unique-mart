@@ -5,7 +5,7 @@ import { saveUpload } from "@/lib/uploads";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDb } from "@/lib/db";
-import { products, users, type OrderStatus } from "@/lib/db/schema";
+import { products, users, DEFAULT_SECTIONS, type OrderStatus, type SectionConfig } from "@/lib/db/schema";
 import { updateOrderStatus } from "@/lib/orders";
 import { updateSiteSettings } from "@/lib/settings";
 import { uniqueProductSlug } from "@/lib/slug";
@@ -200,7 +200,7 @@ function readProductFields(formData: FormData) {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
-  const showQualityBanner = formData.get("showQualityBanner") === "on";
+  const sections = parseSections(formData.get("sections"));
   const showRelatedProducts = formData.get("showRelatedProducts") === "on";
 
   return {
@@ -220,9 +220,32 @@ function readProductFields(formData: FormData) {
     qualityBannerTitle,
     qualityBannerDesc,
     qualityBannerBadges,
-    showQualityBanner,
+    sections,
     showRelatedProducts,
   };
+}
+
+function parseSections(raw: FormDataEntryValue | null): SectionConfig[] {
+  if (typeof raw !== "string") return DEFAULT_SECTIONS;
+  try {
+    const parsed = JSON.parse(raw);
+    if (
+      Array.isArray(parsed) &&
+      parsed.every(
+        (s) =>
+          s &&
+          typeof s.type === "string" &&
+          typeof s.visible === "boolean" &&
+          DEFAULT_SECTIONS.some((d) => d.type === s.type),
+      ) &&
+      parsed.length === DEFAULT_SECTIONS.length
+    ) {
+      return parsed as SectionConfig[];
+    }
+  } catch {
+    // fall through to default
+  }
+  return DEFAULT_SECTIONS;
 }
 
 export async function createProductAction(formData: FormData) {
@@ -258,7 +281,7 @@ export async function createProductAction(formData: FormData) {
     qualityBannerDesc: fields.qualityBannerDesc,
     qualityBannerBadges: fields.qualityBannerBadges,
     qualityBannerImage,
-    showQualityBanner: fields.showQualityBanner,
+    sections: fields.sections,
     showRelatedProducts: fields.showRelatedProducts,
   });
 
@@ -311,7 +334,7 @@ export async function updateProductAction(id: number, formData: FormData) {
       qualityBannerDesc: fields.qualityBannerDesc,
       qualityBannerBadges: fields.qualityBannerBadges,
       qualityBannerImage,
-      showQualityBanner: fields.showQualityBanner,
+      sections: fields.sections,
       showRelatedProducts: fields.showRelatedProducts,
       updatedAt: new Date(),
     })
@@ -371,6 +394,15 @@ export async function updateSettingsAction(formData: FormData) {
     .filter(Boolean);
   const address = String(formData.get("address") || "").trim();
   const facebookUrl = String(formData.get("facebookUrl") || "").trim();
+  const primaryColor = String(formData.get("primaryColor") || "").trim();
+  const fbPixelId = String(formData.get("fbPixelId") || "").trim();
+  const googleSheetsWebhookUrl = String(formData.get("googleSheetsWebhookUrl") || "").trim();
+  const googleSheetsWebhookSecret = String(formData.get("googleSheetsWebhookSecret") || "").trim();
+
+  const currentLogoUrl = String(formData.get("currentLogoUrl") || "");
+  const currentFaviconUrl = String(formData.get("currentFaviconUrl") || "");
+  const logoUrl = await uploadSingleImage(formData.get("logo"), currentLogoUrl);
+  const faviconUrl = await uploadSingleImage(formData.get("favicon"), currentFaviconUrl);
 
   const deliveryZones = readRows(formData, ["zoneLabel", "zoneCharge"]).map((r) => ({
     label: r.zoneLabel,
@@ -382,10 +414,14 @@ export async function updateSettingsAction(formData: FormData) {
     address,
     facebookUrl,
     deliveryZones,
+    logoUrl,
+    faviconUrl,
+    primaryColor: primaryColor || "#e21c34",
+    fbPixelId,
+    googleSheetsWebhookUrl,
+    googleSheetsWebhookSecret,
   });
 
-  revalidatePath("/");
-  revalidatePath("/products", "layout");
-  revalidatePath("/admin/settings");
+  revalidatePath("/", "layout");
   redirect("/admin/settings");
 }

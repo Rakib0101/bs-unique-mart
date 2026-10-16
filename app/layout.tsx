@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Hind_Siliguri, Inter } from "next/font/google";
 import "./globals.css";
 import content from "@/data/site.json";
+import { getSiteSettings } from "@/lib/settings";
 
 const hindSiliguri = Hind_Siliguri({
   variable: "--font-hind-siliguri",
@@ -15,7 +16,6 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bsuniquemart.com";
 const p = content.flagshipProduct;
 
@@ -26,7 +26,25 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const icons: Metadata["icons"] = settings.faviconUrl
+    ? { icon: [{ url: settings.faviconUrl }] }
+    : {
+        icon: [
+          { url: "/favicon.ico", sizes: "any" },
+          { url: "/icon.png", type: "image/png", sizes: "44x44" },
+        ],
+        apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+      };
+
+  return {
+    ...baseMetadata,
+    icons,
+  };
+}
+
+const baseMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: `${content.brand.name} | ${p.title}`,
@@ -49,15 +67,6 @@ export const metadata: Metadata = {
   publisher: content.brand.name,
   alternates: {
     canonical: "/",
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png", sizes: "44x44" },
-    ],
-    apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
-    ],
   },
   openGraph: {
     type: "website",

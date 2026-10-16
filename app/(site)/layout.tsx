@@ -3,8 +3,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import content from "@/data/site.json";
 import { getSiteSettings } from "@/lib/settings";
+import { darken } from "@/lib/color";
 
-const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bsuniquemart.com";
 const p = content.flagshipProduct;
 
@@ -66,8 +66,15 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     },
   };
 
+  const brand = settings.primaryColor || "#e21c34";
+
   return (
     <div className="flex min-h-full flex-col">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `:root{--color-brand:${brand};--color-brand-dark:${darken(brand)};}`,
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -76,14 +83,15 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
-      <Header />
+      <Header logoUrl={settings.logoUrl} />
       <main className="flex-1">{children}</main>
       <Footer
+        logoUrl={settings.logoUrl}
         phones={settings.phones}
         address={settings.address}
         facebookUrl={settings.facebookUrl}
       />
-      {fbPixelId ? (
+      {settings.fbPixelId ? (
         <Script id="fb-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -94,7 +102,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${fbPixelId}');
+            fbq('init', '${settings.fbPixelId}');
             fbq('track', 'PageView');
           `}
         </Script>

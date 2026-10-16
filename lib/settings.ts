@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
 import { siteSettings, type SiteSettings } from "@/lib/db/schema";
@@ -11,17 +12,23 @@ const FALLBACK: SiteSettings = {
   address: "",
   facebookUrl: "",
   deliveryZones: [],
+  logoUrl: "",
+  faviconUrl: "",
+  primaryColor: "#e21c34",
+  fbPixelId: "",
+  googleSheetsWebhookUrl: "",
+  googleSheetsWebhookSecret: "",
   updatedAt: new Date(0),
 };
 
-export async function getSiteSettings(): Promise<SiteSettings> {
+export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   const rows = await getDb()
     .select()
     .from(siteSettings)
     .where(eq(siteSettings.id, SETTINGS_ID))
     .limit(1);
   return rows[0] ?? FALLBACK;
-}
+});
 
 export async function updateSiteSettings(values: Partial<Omit<SiteSettings, "id" | "updatedAt">>) {
   const db = getDb();
@@ -38,6 +45,11 @@ export async function updateSiteSettings(values: Partial<Omit<SiteSettings, "id"
       address: "",
       facebookUrl: "",
       deliveryZones: [],
+      logoUrl: "",
+      faviconUrl: "",
+      fbPixelId: "",
+      googleSheetsWebhookUrl: "",
+      googleSheetsWebhookSecret: "",
       ...values,
     });
   } else {

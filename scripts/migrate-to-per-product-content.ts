@@ -37,7 +37,6 @@ async function main() {
       "Mens Style তৈরি হয়েছে আধুনিক পুরুষের দৈনন্দিন প্রয়োজনকে সামনে রেখে—যেখানে ভালো ডিজাইন, আরাম এবং মান একসাথে আসে।",
     qualityBannerBadges: ["Premium Quality", "Modern Fit", "Everyday Comfort"],
     qualityBannerImage: "/images/products/t-shirt/banner.png",
-    showQualityBanner: true,
     showRelatedProducts: true,
   });
 

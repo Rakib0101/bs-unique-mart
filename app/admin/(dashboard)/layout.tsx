@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { requireUser } from "@/lib/auth";
+import { getSiteSettings } from "@/lib/settings";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 
 export const metadata: Metadata = {
@@ -12,11 +13,11 @@ export default async function AdminDashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await requireUser();
+  const [session, settings] = await Promise.all([requireUser(), getSiteSettings()]);
 
   return (
     <div className="min-h-screen bg-surface-muted">
-      <AdminSidebar username={session.username} role={session.role} />
+      <AdminSidebar username={session.username} role={session.role} logoUrl={settings.logoUrl} />
       <main className="ml-64 min-h-screen">{children}</main>
     </div>
   );

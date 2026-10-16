@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductById, getProductUrl } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
+import { DEFAULT_SECTIONS } from "@/lib/db/schema";
+import { SECTION_LABELS } from "@/components/admin/SectionOrderEditor";
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
@@ -130,9 +132,15 @@ export default async function ProductDetailPage({
         ) : null}
 
         <section className="rounded-xl border border-surface-line bg-white p-6">
-          <h2 className="mb-1 font-bold text-ink">Page sections</h2>
+          <h2 className="mb-1 font-bold text-ink">Page layout</h2>
           <div className="divide-y divide-surface-line">
-            <Row label="Quality banner" value={product.showQualityBanner ? "Shown" : "Hidden"} />
+            {(product.sections?.length ? product.sections : DEFAULT_SECTIONS).map((s) => (
+              <Row
+                key={s.type}
+                label={SECTION_LABELS[s.type]}
+                value={s.visible ? "Shown" : "Hidden"}
+              />
+            ))}
             <Row label="Related products" value={product.showRelatedProducts ? "Shown" : "Hidden"} />
           </div>
         </section>

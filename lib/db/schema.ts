@@ -15,6 +15,16 @@ export type Spec = { label: string; value: string };
 export type SizeChartRow = { size: string; chest: string; length: string; shoulder: string };
 export type WhyChooseItem = { number: string; title: string; desc: string };
 
+export type SectionType = "highlights" | "whyChooseUs" | "productDetail" | "qualityBanner";
+export type SectionConfig = { type: SectionType; visible: boolean };
+
+export const DEFAULT_SECTIONS: SectionConfig[] = [
+  { type: "highlights", visible: true },
+  { type: "whyChooseUs", visible: true },
+  { type: "productDetail", visible: true },
+  { type: "qualityBanner", visible: true },
+];
+
 export const products = mysqlTable("products", {
   id: int("id").autoincrement().primaryKey(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
@@ -38,7 +48,7 @@ export const products = mysqlTable("products", {
   qualityBannerDesc: text("quality_banner_desc").notNull(),
   qualityBannerBadges: json("quality_banner_badges").$type<string[]>().notNull(),
   qualityBannerImage: text("quality_banner_image").notNull(),
-  showQualityBanner: boolean("show_quality_banner").notNull().default(true),
+  sections: json("sections").$type<SectionConfig[]>().notNull(),
   showRelatedProducts: boolean("show_related_products").notNull().default(true),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
@@ -95,6 +105,12 @@ export const siteSettings = mysqlTable("site_settings", {
   address: text("address").notNull(),
   facebookUrl: text("facebook_url").notNull(),
   deliveryZones: json("delivery_zones").$type<DeliveryZone[]>().notNull(),
+  logoUrl: text("logo_url").notNull(),
+  faviconUrl: text("favicon_url").notNull(),
+  primaryColor: varchar("primary_color", { length: 7 }).notNull().default("#e21c34"),
+  fbPixelId: varchar("fb_pixel_id", { length: 64 }).notNull(),
+  googleSheetsWebhookUrl: text("google_sheets_webhook_url").notNull(),
+  googleSheetsWebhookSecret: varchar("google_sheets_webhook_secret", { length: 255 }).notNull(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 

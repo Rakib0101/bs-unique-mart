@@ -2,13 +2,13 @@ import content from "@/data/site.json";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Header() {
+export default function Header({ logoUrl }: { logoUrl?: string }) {
 	return (
 		<header className="sticky top-0 z-50 border-b border-surface-line bg-white/90 backdrop-blur">
 			<div className="container-page flex h-16 items-center justify-between gap-4">
 				<Link href="/" className="flex shrink-0 items-center gap-2">
 					<Image
-						src="/images/BS_Unique_Mart_Logo.png"
+						src={logoUrl || "/images/BS_Unique_Mart_Logo.png"}
 						alt="BS Unique Mart"
 						width={48}
 						height={48}
