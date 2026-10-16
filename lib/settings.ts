@@ -32,7 +32,14 @@ export async function updateSiteSettings(values: Partial<Omit<SiteSettings, "id"
     .limit(1);
 
   if (existing.length === 0) {
-    await db.insert(siteSettings).values({ id: SETTINGS_ID, ...values });
+    await db.insert(siteSettings).values({
+      id: SETTINGS_ID,
+      phones: [],
+      address: "",
+      facebookUrl: "",
+      deliveryZones: [],
+      ...values,
+    });
   } else {
     await db
       .update(siteSettings)

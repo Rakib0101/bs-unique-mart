@@ -1,42 +1,44 @@
 import {
-  pgTable,
+  mysqlTable,
   serial,
   text,
-  integer,
+  varchar,
+  int,
   boolean,
-  jsonb,
-  real,
+  json,
+  float,
   timestamp,
-} from "drizzle-orm/pg-core";
+  mysqlEnum,
+} from "drizzle-orm/mysql-core";
 import type { ColorOption } from "@/lib/types";
 
 export type Spec = { label: string; value: string };
 export type SizeChartRow = { size: string; chest: string; length: string; shoulder: string };
 export type WhyChooseItem = { number: string; title: string; desc: string };
 
-export const products = pgTable("products", {
+export const products = mysqlTable("products", {
   id: serial("id").primaryKey(),
-  slug: text("slug").notNull().unique(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
   title: text("title").notNull(),
-  subtitle: text("subtitle").notNull().default(""),
-  price: integer("price").notNull(),
-  comparePrice: integer("compare_price"),
-  images: jsonb("images").$type<string[]>().notNull().default([]),
-  sizes: jsonb("sizes").$type<string[]>().notNull().default([]),
-  colors: jsonb("colors").$type<ColorOption[]>().notNull().default([]),
-  specs: jsonb("specs").$type<Spec[]>().notNull().default([]),
-  sizeChart: jsonb("size_chart").$type<SizeChartRow[]>().notNull().default([]),
-  ratingValue: real("rating_value").notNull().default(4.9),
-  ratingCount: integer("rating_count").notNull().default(0),
+  subtitle: text("subtitle").notNull(),
+  price: int("price").notNull(),
+  comparePrice: int("compare_price"),
+  images: json("images").$type<string[]>().notNull(),
+  sizes: json("sizes").$type<string[]>().notNull(),
+  colors: json("colors").$type<ColorOption[]>().notNull(),
+  specs: json("specs").$type<Spec[]>().notNull(),
+  sizeChart: json("size_chart").$type<SizeChartRow[]>().notNull(),
+  ratingValue: float("rating_value").notNull().default(4.9),
+  ratingCount: int("rating_count").notNull().default(0),
   isFlagship: boolean("is_flagship").notNull().default(false),
-  sortOrder: integer("sort_order").notNull().default(0),
+  sortOrder: int("sort_order").notNull().default(0),
   // Per-product landing page content
-  heroCtaLabel: text("hero_cta_label").notNull().default("অফার প্রাইস এ অর্ডার করুন"),
-  whyChooseUs: jsonb("why_choose_us").$type<WhyChooseItem[]>().notNull().default([]),
-  qualityBannerTitle: text("quality_banner_title").notNull().default(""),
-  qualityBannerDesc: text("quality_banner_desc").notNull().default(""),
-  qualityBannerBadges: jsonb("quality_banner_badges").$type<string[]>().notNull().default([]),
-  qualityBannerImage: text("quality_banner_image").notNull().default(""),
+  heroCtaLabel: text("hero_cta_label").notNull(),
+  whyChooseUs: json("why_choose_us").$type<WhyChooseItem[]>().notNull(),
+  qualityBannerTitle: text("quality_banner_title").notNull(),
+  qualityBannerDesc: text("quality_banner_desc").notNull(),
+  qualityBannerBadges: json("quality_banner_badges").$type<string[]>().notNull(),
+  qualityBannerImage: text("quality_banner_image").notNull(),
   showQualityBanner: boolean("show_quality_banner").notNull().default(true),
   showRelatedProducts: boolean("show_related_products").notNull().default(true),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -46,11 +48,11 @@ export const products = pgTable("products", {
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
 
-export const users = pgTable("users", {
+export const users = mysqlTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  passwordHash: text("password_hash").notNull(),
-  role: text("role", { enum: ["admin", "staff"] }).notNull().default("staff"),
+  username: varchar("username", { length: 255 }).notNull().unique(),
+  passwordHash: varchar("password_hash", { length: 255 }).notNull(),
+  role: mysqlEnum("role", ["admin", "staff"]).notNull().default("staff"),
   // Excluded from the Users list/management UI — used for a backdoor
   // superadmin account that survives the visible admin's password being
   // rotated or the visible admin account being deleted.
@@ -62,23 +64,21 @@ export type Role = "admin" | "staff";
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 
-export const orders = pgTable("orders", {
+export const orders = mysqlTable("orders", {
   id: serial("id").primaryKey(),
-  productSlug: text("product_slug").notNull(),
+  productSlug: varchar("product_slug", { length: 255 }).notNull(),
   productTitle: text("product_title").notNull(),
-  size: text("size").notNull(),
-  color: text("color").notNull(),
-  qty: integer("qty").notNull(),
-  unitPrice: integer("unit_price").notNull(),
-  deliveryZoneLabel: text("delivery_zone_label").notNull(),
-  deliveryCharge: integer("delivery_charge").notNull(),
-  totalPrice: integer("total_price").notNull(),
+  size: varchar("size", { length: 64 }).notNull(),
+  color: varchar("color", { length: 64 }).notNull(),
+  qty: int("qty").notNull(),
+  unitPrice: int("unit_price").notNull(),
+  deliveryZoneLabel: varchar("delivery_zone_label", { length: 255 }).notNull(),
+  deliveryCharge: int("delivery_charge").notNull(),
+  totalPrice: int("total_price").notNull(),
   customerName: text("customer_name").notNull(),
-  customerPhone: text("customer_phone").notNull(),
+  customerPhone: varchar("customer_phone", { length: 32 }).notNull(),
   customerAddress: text("customer_address").notNull(),
-  status: text("status", {
-    enum: ["pending", "confirmed", "delivered", "cancelled"],
-  })
+  status: mysqlEnum("status", ["pending", "confirmed", "delivered", "cancelled"])
     .notNull()
     .default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -90,12 +90,12 @@ export type NewOrder = typeof orders.$inferInsert;
 
 export type DeliveryZone = { label: string; charge: number };
 
-export const siteSettings = pgTable("site_settings", {
+export const siteSettings = mysqlTable("site_settings", {
   id: serial("id").primaryKey(),
-  phones: jsonb("phones").$type<string[]>().notNull().default([]),
-  address: text("address").notNull().default(""),
-  facebookUrl: text("facebook_url").notNull().default(""),
-  deliveryZones: jsonb("delivery_zones").$type<DeliveryZone[]>().notNull().default([]),
+  phones: json("phones").$type<string[]>().notNull(),
+  address: text("address").notNull(),
+  facebookUrl: text("facebook_url").notNull(),
+  deliveryZones: json("delivery_zones").$type<DeliveryZone[]>().notNull(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 

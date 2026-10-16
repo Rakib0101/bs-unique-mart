@@ -19,6 +19,7 @@ import {
 } from "@/lib/auth";
 
 const ORDER_STATUSES: OrderStatus[] = ["pending", "confirmed", "delivered", "cancelled"];
+const DEFAULT_HERO_CTA = "অফার প্রাইস এ অর্ডার করুন";
 
 export async function loginAction(formData: FormData) {
   const username = String(formData.get("username") || "").trim();
@@ -256,7 +257,7 @@ export async function createProductAction(formData: FormData) {
     ratingCount: fields.ratingCount,
     isFlagship: fields.isFlagship,
     whyChooseUs: fields.whyChooseUs,
-    heroCtaLabel: fields.heroCtaLabel || undefined,
+    heroCtaLabel: fields.heroCtaLabel || DEFAULT_HERO_CTA,
     qualityBannerTitle: fields.qualityBannerTitle,
     qualityBannerDesc: fields.qualityBannerDesc,
     qualityBannerBadges: fields.qualityBannerBadges,

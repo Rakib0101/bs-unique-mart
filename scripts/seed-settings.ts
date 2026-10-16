@@ -7,14 +7,14 @@ async function main() {
 
   await db
     .insert(siteSettings)
+    .ignore()
     .values({
       id: 1,
       phones: content.brand.phones,
       address: content.brand.address,
       facebookUrl: content.brand.social.facebook ?? "",
       deliveryZones: content.deliveryZones,
-    })
-    .onConflictDoNothing({ target: siteSettings.id });
+    });
 
   console.log("Seeded site settings.");
 }

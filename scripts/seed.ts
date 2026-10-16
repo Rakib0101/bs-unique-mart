@@ -2,6 +2,8 @@ import { getDb } from "@/lib/db";
 import { products } from "@/lib/db/schema";
 import content from "@/data/site.json";
 
+const DEFAULT_HERO_CTA = "অফার প্রাইস এ অর্ডার করুন";
+
 async function main() {
   const db = getDb();
 
@@ -10,6 +12,7 @@ async function main() {
 
   await db
     .insert(products)
+    .ignore()
     .values({
       slug: flagship.slug,
       title: flagship.title,
@@ -25,25 +28,39 @@ async function main() {
       ratingCount: flagship.rating.count,
       isFlagship: true,
       sortOrder: 0,
-    })
-    .onConflictDoNothing({ target: products.slug });
+      heroCtaLabel: DEFAULT_HERO_CTA,
+      whyChooseUs: [],
+      qualityBannerTitle: "",
+      qualityBannerDesc: "",
+      qualityBannerBadges: [],
+      qualityBannerImage: "",
+    });
 
   for (let i = 0; i < related.length; i++) {
     const p = related[i];
     await db
       .insert(products)
+      .ignore()
       .values({
         slug: p.slug,
         title: p.title,
+        subtitle: "",
         price: p.price,
         comparePrice: p.comparePrice,
         images: p.images,
         sizes: p.sizes,
         colors: p.colors,
+        specs: [],
+        sizeChart: [],
         isFlagship: false,
         sortOrder: i + 1,
-      })
-      .onConflictDoNothing({ target: products.slug });
+        heroCtaLabel: DEFAULT_HERO_CTA,
+        whyChooseUs: [],
+        qualityBannerTitle: "",
+        qualityBannerDesc: "",
+        qualityBannerBadges: [],
+        qualityBannerImage: "",
+      });
   }
 
   console.log(`Seeded ${1 + related.length} products.`);

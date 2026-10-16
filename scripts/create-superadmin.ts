@@ -13,13 +13,13 @@ async function main() {
 
   await db
     .insert(users)
+    .ignore()
     .values({
       username,
       passwordHash: await hashPassword(password),
       role: "admin",
       hidden: true,
-    })
-    .onConflictDoNothing({ target: users.username });
+    });
 
   console.log(`Ensured hidden superadmin "${username}" exists.`);
 }
