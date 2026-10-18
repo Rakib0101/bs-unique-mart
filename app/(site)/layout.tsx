@@ -51,7 +51,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     "@type": "Organization",
     name: content.brand.name,
     url: siteUrl,
-    logo: `${siteUrl}/images/BS_Unique_Mart_Logo.png`,
+    logo: `${siteUrl}${settings.logoUrl || "/images/BS_Unique_Mart_Logo.png"}`,
     contactPoint: {
       "@type": "ContactPoint",
       telephone: settings.phones[0] ?? content.brand.phones[0],
