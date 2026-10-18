@@ -61,23 +61,8 @@ export async function POST(request: Request) {
   const deliveryCharge = zone.charge;
   const totalPrice = unitPrice * qty + deliveryCharge;
 
-  const webhookUrl = settings.googleSheetsWebhookUrl;
-  const webhookSecret = settings.googleSheetsWebhookSecret;
-
-  if (!webhookUrl || !webhookSecret) {
-    console.error(
-      "Checkout: Google Sheets webhook not configured (set it in Admin → Settings).",
-    );
-    return Response.json(
-      { error: "Ordering is not configured yet. Please try again later." },
-      { status: 500 },
-    );
-  }
-
-  // Google Sheets remains the source of truth for order handling; this local
-  // record is what the admin dashboard reads. Create it first (best-effort,
-  // never blocks the order) so we can hand its id to the Sheet — that id is
-  // what lets a later status edit in the Sheet find its way back here.
+  // The database is the source of truth the admin dashboard reads from —
+  // this must succeed for the order to exist anywhere.
   let appOrderId: number | null = null;
   try {
     appOrderId = await createOrder({
@@ -96,50 +81,57 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("Checkout: failed to save order record to database:", err);
-  }
-
-  try {
-    const res = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        secret: webhookSecret,
-        appOrderId,
-        productTitle: product.title,
-        size,
-        color,
-        qty,
-        unitPrice,
-        deliveryZoneLabel: zone.label,
-        deliveryCharge,
-        totalPrice,
-        name: name.trim(),
-        phone: phone.trim(),
-        address: address.trim(),
-      }),
-    });
-
-    const rawText = await res.text();
-    let data: { status?: string; message?: string } | null = null;
-    try {
-      data = JSON.parse(rawText);
-    } catch {
-      // not json (e.g. Google html error page)
-    }
-
-    if (!res.ok || data?.status !== "success") {
-      console.error(
-        `Checkout: Google Sheet rejected with HTTP ${res.status}. Body:`,
-        data || rawText.substring(0, 300),
-      );
-      throw new Error(data?.message || `Webhook rejected with HTTP ${res.status}`);
-    }
-  } catch (err) {
-    console.error("Checkout: failed to write order to Google Sheet:", err);
     return Response.json(
-      { error: "Failed to place order. Please check Google Sheets webhook." },
+      { error: "Failed to place order. Please try again." },
       { status: 500 },
     );
+  }
+
+  // Google Sheets sync is an optional integration (Admin → Settings: "Leave
+  // blank to disable order syncing") — never block or fail the customer's
+  // order over it, only log so staff can investigate.
+  const webhookUrl = settings.googleSheetsWebhookUrl;
+  const webhookSecret = settings.googleSheetsWebhookSecret;
+
+  if (webhookUrl && webhookSecret) {
+    try {
+      const res = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          secret: webhookSecret,
+          appOrderId,
+          productTitle: product.title,
+          size,
+          color,
+          qty,
+          unitPrice,
+          deliveryZoneLabel: zone.label,
+          deliveryCharge,
+          totalPrice,
+          name: name.trim(),
+          phone: phone.trim(),
+          address: address.trim(),
+        }),
+      });
+
+      const rawText = await res.text();
+      let data: { status?: string; message?: string } | null = null;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        // not json (e.g. Google html error page)
+      }
+
+      if (!res.ok || data?.status !== "success") {
+        console.error(
+          `Checkout: Google Sheet rejected with HTTP ${res.status}. Body:`,
+          data || rawText.substring(0, 300),
+        );
+      }
+    } catch (err) {
+      console.error("Checkout: failed to write order to Google Sheet:", err);
+    }
   }
 
   return Response.json({ ok: true });
