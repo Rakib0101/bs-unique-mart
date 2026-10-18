@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function Header({ logoUrl }: { logoUrl?: string }) {
 	return (
 		<header className="sticky top-0 z-50 border-b border-surface-line bg-white/90 backdrop-blur">
-			<div className="container-page flex items-center justify-between gap-4 py-5 sm:py-6">
-				<Link href="/" className="flex shrink-0 items-center gap-2">
+			<div className="container-page flex items-center justify-between gap-2 py-4 sm:gap-4 sm:py-6">
+				<Link href="/" className="flex shrink-0 items-center gap-1.5 sm:gap-2">
 					<Image
 						src={logoUrl || "/images/BS_Unique_Mart_Logo.png"}
 						alt="BS Unique Mart"
@@ -15,12 +15,12 @@ export default function Header({ logoUrl }: { logoUrl?: string }) {
 						className="h-8 w-8 object-contain sm:h-9 sm:w-9"
 						priority
 					/>
-					<span className="font-[family-name:var(--font-outfit)] text-[36px] font-bold text-ink">
+					<span className="hidden whitespace-nowrap font-[family-name:var(--font-outfit)] font-bold text-ink sm:inline-block sm:text-xl md:text-2xl lg:text-[36px]">
 						{content.brand.name}
 					</span>
 				</Link>
 
-				<nav className="hidden items-center gap-8 text-lg font-medium text-ink/70 md:flex">
+				<nav className="hidden items-center gap-4 text-sm font-medium text-ink/70 md:flex md:gap-6 lg:gap-8 lg:text-lg">
 					{content.nav.map((item) => (
 						<a
 							key={item.href}
@@ -34,7 +34,7 @@ export default function Header({ logoUrl }: { logoUrl?: string }) {
 
 				<a
 					href="#order"
-					className="shrink-0 rounded-none bg-brand px-6 py-3.5 text-base font-bold text-white transition-colors hover:bg-brand-dark sm:px-8 sm:py-4 sm:text-lg"
+					className="shrink-0 whitespace-nowrap rounded-none bg-brand px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-dark sm:px-6 sm:py-3 sm:text-base lg:px-8 lg:py-4 lg:text-lg"
 				>
 					{content.ctaLabel}
 				</a>
