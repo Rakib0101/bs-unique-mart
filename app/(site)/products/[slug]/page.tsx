@@ -11,7 +11,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const product = await getProductBySlug(decodeURIComponent(slug));
   if (!product) return {};
 
   return {
@@ -32,7 +32,10 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  // Unlike Route Handlers, page params aren't URL-decoded — a non-ASCII
+  // (e.g. Bangla) slug arrives as its raw percent-encoded form and never
+  // matches the plain-text value stored in the database without this.
+  const product = await getProductBySlug(decodeURIComponent(slug));
   if (!product) notFound();
 
   const [otherProducts, settings] = await Promise.all([
