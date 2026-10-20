@@ -185,3 +185,10 @@ after this deploy's files land.
 - `output: "standalone"` in `next.config.ts` is vestigial — nothing deploys
   `.next/standalone`. Safe to ignore unless someone deliberately switches to
   using it (would also mean rewriting `server.js`).
+- `server.js` serves `/uploads/*` itself, reading straight from disk on every
+  request — do not remove this. Next's built-in `public/` file serving
+  snapshots what's on disk when `next({dev:false}).prepare()` runs at boot,
+  so any admin-uploaded file (every upload, since none exist at build time)
+  would 404 until the next Passenger restart otherwise. Confirmed directly:
+  a real uploaded photo 404'd via Next's own router despite being correctly
+  saved and linked in the DB, with its mtime ~2 minutes after the last boot.
