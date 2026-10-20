@@ -8,7 +8,11 @@ export function slugify(title: string) {
     title
       .toLowerCase()
       .trim()
-      .replace(/[^\p{L}\p{N}]+/gu, "-")
+      // \p{M} keeps combining marks — essential for Bengali and other Indic
+      // scripts, where vowel signs and the virama are separate combining
+      // characters, not letters. Without it, e.g. "স্টাইলিশ" loses every
+      // vowel sign and conjunct marker, producing unreadable fragments.
+      .replace(/[^\p{L}\p{N}\p{M}]+/gu, "-")
       .replace(/^-+|-+$/g, "") || `product-${Date.now()}`
   );
 }

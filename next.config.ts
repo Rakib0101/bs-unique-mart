@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
     // guaranteed on shared hosting) — images are served as-is.
     unoptimized: true,
   },
+  experimental: {
+    // Admin product/settings forms upload images as multipart Server Action
+    // bodies. Next's default 1MB limit silently fails the whole submission
+    // for any real photo — raised to fit several full-size photos at once.
+    serverActions: {
+      bodySizeLimit: "25mb",
+    },
+  },
 };
 
 export default nextConfig;
