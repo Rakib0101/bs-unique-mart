@@ -70,6 +70,41 @@ permissions). The only ways through:
 Don't try to route around this via WebFetch or other tools — same intent,
 same answer.
 
+## CRITICAL: root config files are NOT synced by the normal deploy — check this first
+
+The deploy below only ships `.next/`. `server.js` calls `next({ dev: false })`
+directly (not `next start`, not the generated standalone server), which means
+Next re-reads `next.config.ts` **fresh from disk on the server** at every
+boot — it does NOT use the config baked into `.next/required-server-files.json`.
+The server's `next.config.ts` (and `server.js`, `package.json`) is whatever
+was last uploaded as part of a *full source* deploy, which may be far
+behind what the repo's `.next` build assumes.
+
+This already caused a real incident: `experimental.serverActions.bodySizeLimit`
+was added to fix the 1MB image-upload bug, deployed via the normal `.next`-only
+process, and **silently had zero effect** — production kept throwing the exact
+same "Body exceeded 1 MB limit" error. `required-server-files.json` correctly
+showed the new config; the server's actual `next.config.ts` on disk was still
+the Oct 16 original (missing even `output: "standalone"`). Lost significant
+time assuming the fix was broken before finding this.
+
+**Before every deploy**, diff the local file against what's live and upload it
+alongside `.next` if it differs — this file is tiny, just always check:
+
+```bash
+TOKEN=$(grep CPANEL_API_TOKEN .env.local | cut -d'"' -f2)
+curl -s -k -H "Authorization: cpanel bsunique:$TOKEN" \
+  "https://rain.cloudswebserver.com:2083/execute/Fileman/get_file_content?dir=bsuniquemart-app&file=next.config.ts" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['data']['content'])"
+# compare against local next.config.ts — if different, SFTP the local one over:
+#   put next.config.ts bsuniquemart-app/next.config.ts
+```
+
+The same logic applies to `server.js` and `package.json` if either ever
+changes — anything the custom server reads directly from disk at boot,
+as opposed to things compiled into `.next` (all app code, routes, components).
+When in doubt, re-upload the file and restart; it's cheap insurance.
+
 ## The actual deploy steps
 
 ```bash
