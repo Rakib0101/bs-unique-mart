@@ -43,7 +43,7 @@ export default function Hero({ product: p }: { product: Product }) {
 				</div>
 
 				<div className="mt-8 sm:mt-10">
-					<HeroGallery images={p.images} alt={p.title} />
+					<HeroGallery images={p.images} alt={p.title} colors={p.colors} />
 				</div>
 			</div>
 		</section>

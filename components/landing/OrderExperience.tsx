@@ -1,9 +1,9 @@
 "use client";
 
 import content from "@/data/site.json";
+import type { DeliveryZone, Product } from "@/lib/db/schema";
 import { formatPrice, toBanglaDigits } from "@/lib/format";
 import type { OrderPayload } from "@/lib/types";
-import type { Product, DeliveryZone } from "@/lib/db/schema";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -33,6 +33,15 @@ export default function OrderExperience({
 	const router = useRouter();
 	const [size, setSize] = useState(product.sizes[0] ?? "");
 	const [color, setColor] = useState(product.colors[0]?.name ?? "");
+	const selectedColorIndex = product.colors.findIndex((c) => c.name === color);
+	const selectedColor =
+		selectedColorIndex !== -1 ? product.colors[selectedColorIndex] : undefined;
+
+	const displayedProductImage =
+		selectedColor?.image ||
+		(selectedColorIndex !== -1 && product.images[selectedColorIndex]) ||
+		product.images[0] ||
+		"/images/products/t-shirt/1.png";
 	const [qty, setQty] = useState(1);
 	const [zoneLabel, setZoneLabel] = useState(deliveryZones[0]?.label ?? "");
 	const [name, setName] = useState("");
@@ -43,12 +52,15 @@ export default function OrderExperience({
 	const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-	const activeZone = deliveryZones.find((z) => z.label === zoneLabel) ?? deliveryZones[0];
+	const activeZone =
+		deliveryZones.find((z) => z.label === zoneLabel) ?? deliveryZones[0];
 	const deliveryCharge = activeZone?.charge ?? 0;
 	const subtotal = product.price * qty;
 	const total = subtotal + deliveryCharge;
 
-	const isFormFilled = Boolean(name.trim() && phone.trim() && address.trim() && zoneLabel);
+	const isFormFilled = Boolean(
+		name.trim() && phone.trim() && address.trim() && zoneLabel,
+	);
 
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -106,53 +118,53 @@ export default function OrderExperience({
 		<>
 			{/* Related styles section */}
 			{showRelated && otherProducts.length > 0 ? (
-			<section id="related" className="py-16 sm:py-20 bg-white">
-				<div className="container-page text-center">
-					<p className="text-sm font-semibold uppercase tracking-wide text-brand">
-						{content.relatedSection.eyebrow}
-					</p>
-					<h2 className="mt-2 text-2xl font-bold sm:text-3xl text-ink">
-						{content.relatedSection.title}
-					</h2>
+				<section id="related" className="py-16 sm:py-20 bg-white">
+					<div className="container-page text-center">
+						<p className="text-sm font-semibold uppercase tracking-wide text-brand">
+							{content.relatedSection.eyebrow}
+						</p>
+						<h2 className="mt-2 text-2xl font-bold sm:text-3xl text-ink">
+							{content.relatedSection.title}
+						</h2>
 
-					<div className="mt-8 grid grid-cols-2 gap-4 text-left lg:grid-cols-4">
-						{otherProducts.map((other) => (
-							<Link
-								key={other.slug}
-								href={`/products/${other.slug}`}
-								className="overflow-hidden rounded-xl border border-[#E5E5E5] bg-white text-left transition-all hover:border-ink/40"
-							>
-								<Image
-									src={other.images[0]}
-									alt={other.title}
-									width={600}
-									height={750}
-									className="aspect-4/5 w-full object-cover"
-								/>
-								<div className="p-3">
-									<p className="line-clamp-2 text-base font-bold text-ink">
-										{other.title}
-									</p>
-									<div className="mt-1 flex items-center justify-between gap-2">
-										<span className="text-lg font-bold text-brand">
-											{formatPrice(other.price)}
-										</span>
-										<div className="flex gap-1">
-											{other.colors.map((c) => (
-												<span
-													key={c.name}
-													className="h-3 w-3 rounded-full border border-black/10"
-													style={{ background: c.hex }}
-												/>
-											))}
+						<div className="mt-8 grid grid-cols-2 gap-4 text-left lg:grid-cols-4">
+							{otherProducts.map((other) => (
+								<Link
+									key={other.slug}
+									href={`/products/${other.slug}`}
+									className="overflow-hidden rounded-xl border border-[#E5E5E5] bg-white text-left transition-all hover:border-ink/40"
+								>
+									<Image
+										src={other.images[0]}
+										alt={other.title}
+										width={600}
+										height={750}
+										className="aspect-4/5 w-full object-cover"
+									/>
+									<div className="p-3">
+										<p className="line-clamp-2 text-base font-bold text-ink">
+											{other.title}
+										</p>
+										<div className="mt-1 flex items-center justify-between gap-2">
+											<span className="text-lg font-bold text-brand">
+												{formatPrice(other.price)}
+											</span>
+											<div className="flex gap-1">
+												{other.colors.map((c) => (
+													<span
+														key={c.name}
+														className="h-3 w-3 rounded-full border border-black/10"
+														style={{ background: c.hex }}
+													/>
+												))}
+											</div>
 										</div>
 									</div>
-								</div>
-							</Link>
-						))}
+								</Link>
+							))}
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
 			) : null}
 
 			{/* 100% Figma Match Checkout Form Section */}
@@ -171,18 +183,57 @@ export default function OrderExperience({
 								</h2>
 
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start">
-									{/* Product Main Showcase Image */}
-									<div className="relative aspect-472/567 w-full overflow-hidden bg-surface-muted">
-										<Image
-											src={
-												product.images[0] || "/images/products/t-shirt/1.png"
-											}
-											alt={product.title}
-											fill
-											sizes="(max-width: 768px) 100vw, 480px"
-											className="object-cover object-top"
-											priority
-										/>
+									{/* Product Main Showcase Image & Thumbnails */}
+									<div>
+										<div className="relative aspect-472/567 w-full overflow-hidden bg-surface-muted rounded-xs">
+											<Image
+												key={displayedProductImage}
+												src={displayedProductImage}
+												alt={`${product.title} - ${selectedColor?.name ?? "Product"}`}
+												fill
+												sizes="(max-width: 768px) 100vw, 480px"
+												className="object-cover object-top transition-all duration-200"
+												priority
+											/>
+										</div>
+
+										{product.images && product.images.length > 1 ? (
+											<div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1">
+												{product.images.map((img, idx) => {
+													const isCurrent = displayedProductImage === img;
+													return (
+														<button
+															key={img + idx}
+															type="button"
+															onClick={() => {
+																const matchingColor = product.colors.find(
+																	(c, cIdx) =>
+																		c.image === img ||
+																		(!c.image && cIdx === idx),
+																);
+																if (matchingColor) {
+																	setColor(matchingColor.name);
+																}
+															}}
+															className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-xs border-2 transition-all cursor-pointer ${
+																isCurrent
+																	? "border-brand shadow-sm"
+																	: "border-black/10 opacity-70 hover:opacity-100"
+															}`}
+															aria-label={`View photo ${idx + 1}`}
+														>
+															<Image
+																src={img}
+																alt={`${product.title} ${idx + 1}`}
+																fill
+																sizes="56px"
+																className="object-cover"
+															/>
+														</button>
+													);
+												})}
+											</div>
+										) : null}
 									</div>
 
 									{/* Product Details & Selection Options */}
@@ -229,6 +280,11 @@ export default function OrderExperience({
 											<div className="mt-5">
 												<p className="text-xs font-semibold text-[#666666] mb-2.5">
 													রঙ নির্বাচন করুন
+													{selectedColor ? (
+														<span className="ml-1.5 font-bold text-ink">
+															({selectedColor.name})
+														</span>
+													) : null}
 												</p>
 												<div className="flex items-center gap-3">
 													{product.colors.map((c) => (
@@ -257,7 +313,8 @@ export default function OrderExperience({
 										{product.sizes.length > 0 ? (
 											<div className="mt-5">
 												<p className="text-xs font-semibold text-[#666666] mb-2.5">
-													সাইজ নির্বাচন করুন <span className="text-brand">*</span>
+													সাইজ নির্বাচন করুন{" "}
+													<span className="text-brand">*</span>
 												</p>
 												<div className="flex items-center gap-2.5">
 													{product.sizes.map((s) => (
@@ -393,7 +450,9 @@ export default function OrderExperience({
 													<span className="flex items-center gap-2.5">
 														<span
 															className={`h-4 w-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
-																zoneLabel === zone.label ? "border-brand" : "border-[#D1D5DB]"
+																zoneLabel === zone.label
+																	? "border-brand"
+																	: "border-[#D1D5DB]"
 															}`}
 														>
 															{zoneLabel === zone.label ? (
@@ -445,7 +504,8 @@ export default function OrderExperience({
 							<div className="py-4 flex items-center gap-3.5">
 								<div className="relative w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-surface-muted">
 									<Image
-										src={product.images[0] || "/images/products/t-shirt/1.png"}
+										key={`summary-${displayedProductImage}`}
+										src={displayedProductImage}
 										alt={product.title}
 										fill
 										sizes="56px"

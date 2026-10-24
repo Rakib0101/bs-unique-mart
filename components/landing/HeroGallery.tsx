@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import type { ColorOption } from "@/lib/types";
 
 export interface GalleryItem {
 	id: string;
@@ -13,9 +14,11 @@ export interface GalleryItem {
 export default function HeroGallery({
 	images,
 	alt,
+	colors,
 }: {
 	images?: string[];
 	alt: string;
+	colors?: ColorOption[];
 }) {
 	const [active, setActive] = useState(0);
 
@@ -49,6 +52,41 @@ export default function HeroGallery({
 					</div>
 				</div>
 			</div>
+
+			{/* Color Options: click a color to preview that variant */}
+			{colors && colors.length > 0 ? (
+				<div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+					<span className="text-xs font-medium text-white/70">কালার:</span>
+					{colors.map((c, i) => {
+						const targetImg = c.image || (images && images[i]) || "";
+						const foundIdx = images ? images.indexOf(targetImg) : -1;
+						const targetIdx = foundIdx !== -1 ? foundIdx : i;
+						const isSelected = active === targetIdx;
+						return (
+							<button
+								key={c.name}
+								type="button"
+								onClick={() => {
+									if (targetIdx < items.length) {
+										setActive(targetIdx);
+									}
+								}}
+								className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition-all cursor-pointer ${
+									isSelected
+										? "bg-white text-ink font-semibold shadow-md ring-2 ring-brand"
+										: "bg-white/15 text-white/90 hover:bg-white/25"
+								}`}
+							>
+								<span
+									className="h-3 w-3 rounded-full border border-black/20"
+									style={{ backgroundColor: c.hex }}
+								/>
+								<span>{c.name}</span>
+							</button>
+						);
+					})}
+				</div>
+			) : null}
 
 			{/* Thumbnails Row: narrower centered grid below active image */}
 			{items.length > 1 ? (

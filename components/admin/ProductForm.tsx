@@ -1,357 +1,407 @@
 "use client";
 
+import FilePreviewInput from "@/components/admin/FilePreviewInput";
+import {
+	Field,
+	RowSection,
+	SectionHeader,
+	inputCls,
+	useRows,
+} from "@/components/admin/form-helpers";
+import SectionOrderEditor from "@/components/admin/SectionOrderEditor";
+import ToggleSwitch from "@/components/admin/ToggleSwitch";
 import type { Product } from "@/lib/db/schema";
 import { DEFAULT_SECTIONS } from "@/lib/db/schema";
-import FilePreviewInput from "@/components/admin/FilePreviewInput";
-import { Field, RowSection, SectionHeader, inputCls, useRows } from "@/components/admin/form-helpers";
-import ToggleSwitch from "@/components/admin/ToggleSwitch";
-import SectionOrderEditor from "@/components/admin/SectionOrderEditor";
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function ProductForm({
-  action,
-  product,
-  submitLabel,
+	action,
+	product,
+	submitLabel,
 }: {
-  action: (formData: FormData) => void;
-  product?: Product;
-  submitLabel: string;
+	action: (formData: FormData) => void;
+	product?: Product;
+	submitLabel: string;
 }) {
-  const colors = useRows(product?.colors.length || 0);
-  const specs = useRows(product?.specs.length || 0);
-  const sizeChart = useRows(product?.sizeChart.length || 0);
-  const whyItems = useRows(product?.whyChooseUs.length || 0);
-  const [removedImages, setRemovedImages] = useState<string[]>([]);
+	const colors = useRows(product?.colors.length || 0);
+	const specs = useRows(product?.specs.length || 0);
+	const sizeChart = useRows(product?.sizeChart.length || 0);
+	const whyItems = useRows(product?.whyChooseUs.length || 0);
+	const [removedImages, setRemovedImages] = useState<string[]>([]);
 
-  const existingImages = product?.images || [];
+	const existingImages = product?.images || [];
 
-  return (
-    <form action={action} className="max-w-5xl space-y-5">
-      <section className="space-y-4 rounded-xl border border-surface-line bg-white p-6">
-        <h2 className="font-bold text-ink">Basic info</h2>
-        <Field label="Title *">
-          <input
-            name="title"
-            required
-            defaultValue={product?.title}
-            className={`${inputCls} w-full`}
-          />
-        </Field>
-        <Field label="Subtitle (shown on this product's page)">
-          <input
-            name="subtitle"
-            defaultValue={product?.subtitle}
-            className={`${inputCls} w-full`}
-          />
-        </Field>
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="Price (৳) *">
-            <input
-              name="price"
-              type="number"
-              required
-              min={0}
-              defaultValue={product?.price}
-              className={`${inputCls} w-full`}
-            />
-          </Field>
-          <Field label="Compare-at price (optional, shown crossed out)">
-            <input
-              name="comparePrice"
-              type="number"
-              min={0}
-              defaultValue={product?.comparePrice ?? ""}
-              className={`${inputCls} w-full`}
-            />
-          </Field>
-        </div>
-        <Field label="Sizes — comma separated (e.g. M, L, XL, XXL)">
-          <input
-            name="sizes"
-            defaultValue={(product?.sizes || []).join(", ")}
-            className={`${inputCls} w-full`}
-          />
-        </Field>
-        <label className="flex items-center gap-2 text-sm font-medium text-ink">
-          <input type="checkbox" name="isFlagship" defaultChecked={product?.isFlagship} />
-          Show as the main product on the homepage (/)
-        </label>
-      </section>
+	return (
+		<form action={action} className="max-w-5xl space-y-5">
+			<section className="space-y-4 rounded-xl border border-surface-line bg-white p-6">
+				<h2 className="font-bold text-ink">Basic info</h2>
+				<Field label="Title *">
+					<input
+						name="title"
+						required
+						defaultValue={product?.title}
+						className={`${inputCls} w-full`}
+					/>
+				</Field>
+				<Field label="Subtitle (shown on this product's page)">
+					<input
+						name="subtitle"
+						defaultValue={product?.subtitle}
+						className={`${inputCls} w-full`}
+					/>
+				</Field>
+				<div className="grid grid-cols-2 gap-4">
+					<Field label="Price (৳) *">
+						<input
+							name="price"
+							type="number"
+							required
+							min={0}
+							defaultValue={product?.price}
+							className={`${inputCls} w-full`}
+						/>
+					</Field>
+					<Field label="Compare-at price (optional, shown crossed out)">
+						<input
+							name="comparePrice"
+							type="number"
+							min={0}
+							defaultValue={product?.comparePrice ?? ""}
+							className={`${inputCls} w-full`}
+						/>
+					</Field>
+				</div>
+				<Field label="Sizes — comma separated (e.g. M, L, XL, XXL)">
+					<input
+						name="sizes"
+						defaultValue={(product?.sizes || []).join(", ")}
+						className={`${inputCls} w-full`}
+					/>
+				</Field>
+				<label className="flex items-center gap-2 text-sm font-medium text-ink">
+					<input
+						type="checkbox"
+						name="isFlagship"
+						defaultChecked={product?.isFlagship}
+					/>
+					Show as the main product on the homepage (/)
+				</label>
+			</section>
 
-      <section className="space-y-4 rounded-xl border border-surface-line bg-white p-6">
-        <h2 className="font-bold text-ink">Photos</h2>
+			<section className="space-y-4 rounded-xl border border-surface-line bg-white p-6">
+				<h2 className="font-bold text-ink">Photos</h2>
 
-        {existingImages.length > 0 ? (
-          <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
-            {existingImages.map((url) => {
-              const removed = removedImages.includes(url);
-              return (
-                <div key={url}>
-                  <div
-                    className={`relative aspect-square overflow-hidden rounded-lg bg-surface-muted ${removed ? "opacity-30" : ""}`}
-                  >
-                    <Image src={url} alt="" fill sizes="150px" className="object-cover" />
-                  </div>
-                  {!removed ? <input type="hidden" name="keepImages" value={url} /> : null}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setRemovedImages((r) =>
-                        removed ? r.filter((u) => u !== url) : [...r, url],
-                      )
-                    }
-                    className="mt-1 w-full rounded-md border border-surface-line py-1 text-xs font-medium hover:bg-surface-muted"
-                  >
-                    {removed ? "Undo" : "Remove"}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
+				{existingImages.length > 0 ? (
+					<div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+						{existingImages.map((url) => {
+							const removed = removedImages.includes(url);
+							return (
+								<div key={url}>
+									<div
+										className={`relative aspect-square overflow-hidden rounded-lg bg-surface-muted ${removed ? "opacity-30" : ""}`}
+									>
+										<Image
+											src={url}
+											alt=""
+											fill
+											sizes="150px"
+											className="object-cover"
+										/>
+									</div>
+									{!removed ? (
+										<input type="hidden" name="keepImages" value={url} />
+									) : null}
+									<button
+										type="button"
+										onClick={() =>
+											setRemovedImages((r) =>
+												removed ? r.filter((u) => u !== url) : [...r, url],
+											)
+										}
+										className="mt-1 w-full rounded-md border border-surface-line py-1 text-xs font-medium hover:bg-surface-muted"
+									>
+										{removed ? "Undo" : "Remove"}
+									</button>
+								</div>
+							);
+						})}
+					</div>
+				) : null}
 
-        <Field label="Add photos (the first photo overall is used as the cover)">
-          <FilePreviewInput name="images" multiple />
-        </Field>
-      </section>
+				<Field label="Add photos (the first photo overall is used as the cover)">
+					<FilePreviewInput name="images" multiple />
+				</Field>
+			</section>
 
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <div className="space-y-5">
-          <section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
-            <SectionHeader
-              title="Page layout"
-              description="Drag to reorder, untick to hide — without losing any of the content underneath."
-            />
-            <SectionOrderEditor
-              name="sections"
-              defaultValue={product?.sections ?? DEFAULT_SECTIONS}
-            />
-            <div className="border-t border-surface-line pt-2.5">
-              <ToggleSwitch
-                name="showRelatedProducts"
-                defaultChecked={product?.showRelatedProducts ?? true}
-                label="Related products"
-                description="The “related styles” grid linking to your other products, shown just above the order form."
-              />
-            </div>
-          </section>
+			<div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+				<div className="space-y-5">
+					<section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
+						<SectionHeader
+							title="Page layout"
+							description="Drag to reorder, untick to hide — without losing any of the content underneath."
+						/>
+						<SectionOrderEditor
+							name="sections"
+							defaultValue={product?.sections ?? DEFAULT_SECTIONS}
+						/>
+						<div className="border-t border-surface-line pt-2.5">
+							<ToggleSwitch
+								name="showRelatedProducts"
+								defaultChecked={product?.showRelatedProducts ?? true}
+								label="Related products"
+								description="The “related styles” grid linking to your other products, shown just above the order form."
+							/>
+						</div>
+					</section>
 
-          <section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
-            <SectionHeader
-              title="Hero call-to-action"
-              description="The button text on the top banner. Everything else in the hero (title, price, photos) comes from Basic info and Photos above."
-            />
-            <Field label="Button label">
-              <input
-                name="heroCtaLabel"
-                defaultValue={product?.heroCtaLabel}
-                className={`${inputCls} w-full`}
-              />
-            </Field>
-          </section>
+					<section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
+						<SectionHeader
+							title="Hero call-to-action"
+							description="The button text on the top banner. Everything else in the hero (title, price, photos) comes from Basic info and Photos above."
+						/>
+						<Field label="Button label">
+							<input
+								name="heroCtaLabel"
+								defaultValue={product?.heroCtaLabel}
+								className={`${inputCls} w-full`}
+							/>
+						</Field>
+					</section>
 
-          <RowSection
-            title="Color options"
-            ids={colors.ids}
-            onAdd={colors.add}
-            onRemove={colors.remove}
-            addLabel="+ Add color"
-            renderRow={(i) => (
-              <div className="flex items-center gap-3">
-                <input
-                  name="colorName"
-                  placeholder="Color name (e.g. কালো)"
-                  defaultValue={product?.colors[i]?.name}
-                  className={`${inputCls} min-w-0 flex-1`}
-                />
-                <input
-                  type="color"
-                  name="colorHex"
-                  defaultValue={product?.colors[i]?.hex || "#1c1c1c"}
-                  className="h-10 w-14 rounded-md border border-surface-line"
-                />
-              </div>
-            )}
-          />
+					<RowSection
+						title="Color options"
+						ids={colors.ids}
+						onAdd={colors.add}
+						onRemove={colors.remove}
+						addLabel="+ Add color"
+						renderRow={(i) => (
+							<div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
+								<input
+									name="colorName"
+									placeholder="Color name (e.g. Black)"
+									defaultValue={product?.colors[i]?.name}
+									className={`${inputCls} min-w-0 w-full`}
+								/>
 
-          <section className="grid grid-cols-2 gap-4 rounded-xl border border-surface-line bg-white p-5">
-            <Field label="Rating value (e.g. 4.9)">
-              <input
-                name="ratingValue"
-                type="number"
-                step="0.1"
-                min={0}
-                max={5}
-                defaultValue={product?.ratingValue ?? 4.9}
-                className={`${inputCls} w-full`}
-              />
-            </Field>
-            <Field label="Rating count">
-              <input
-                name="ratingCount"
-                type="number"
-                min={0}
-                defaultValue={product?.ratingCount ?? 0}
-                className={`${inputCls} w-full`}
-              />
-            </Field>
-          </section>
-        </div>
+								<input
+									type="color"
+									name="colorHex"
+									defaultValue={product?.colors[i]?.hex || "#1c1c1c"}
+									className="h-10 w-14 rounded-md border border-surface-line cursor-pointer"
+								/>
 
-        <div className="space-y-5">
-          <RowSection
-            title="Why choose us — bullets"
-            description="The four-column feature grid on this product's page."
-            ids={whyItems.ids}
-            onAdd={whyItems.add}
-            onRemove={whyItems.remove}
-            addLabel="+ Add bullet"
-            renderRow={(i) => (
-              <div className="space-y-2">
-                <div className="flex gap-3">
-                  <input
-                    name="whyNumber"
-                    placeholder="No. (e.g. 01)"
-                    defaultValue={product?.whyChooseUs[i]?.number}
-                    className={`${inputCls} !w-20`}
-                  />
-                  <input
-                    name="whyTitle"
-                    placeholder="Title"
-                    defaultValue={product?.whyChooseUs[i]?.title}
-                    className={`${inputCls} min-w-0 flex-1`}
-                  />
-                </div>
-                <textarea
-                  name="whyDesc"
-                  rows={2}
-                  placeholder="Description"
-                  defaultValue={product?.whyChooseUs[i]?.desc}
-                  className={`${inputCls} w-full`}
-                />
-              </div>
-            )}
-          />
+								<div className="flex flex-col sm:flex-row gap-2 sm:col-span-2">
+									<input
+										type="text"
+										name="colorImage"
+										placeholder="Photo URL or path (optional, leaves blank to match photo by index)"
+										defaultValue={product?.colors[i]?.image || ""}
+										className={`${inputCls} min-w-0 flex-1 text-xs`}
+									/>
+									{existingImages.length > 0 ? (
+										<select
+											onChange={(e) => {
+												const val = e.target.value;
+												const row = e.target.closest(".grid");
+												const input = row?.querySelector('input[name="colorImage"]') as HTMLInputElement | null;
+												if (input && val) {
+													input.value = val;
+												}
+											}}
+											className={`${inputCls} text-xs sm:w-44`}
+											defaultValue=""
+										>
+											<option value="">Pick photo...</option>
+											{existingImages.map((img, imgIdx) => (
+												<option key={img} value={img}>
+													Photo #{imgIdx + 1}
+												</option>
+											))}
+										</select>
+									) : null}
+								</div>
+							</div>
+						)}
+					/>
 
-          <section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
-            <SectionHeader
-              title="Quality banner content"
-              description="Visibility and position are controlled by “Page layout” above."
-            />
-            <Field label="Title">
-              <input
-                name="qualityBannerTitle"
-                defaultValue={product?.qualityBannerTitle}
-                className={`${inputCls} w-full`}
-              />
-            </Field>
-            <Field label="Description">
-              <textarea
-                name="qualityBannerDesc"
-                rows={2}
-                defaultValue={product?.qualityBannerDesc}
-                className={`${inputCls} w-full`}
-              />
-            </Field>
-            <Field label="Badges — comma separated">
-              <input
-                name="qualityBannerBadges"
-                defaultValue={product?.qualityBannerBadges.join(", ")}
-                className={`${inputCls} w-full`}
-              />
-            </Field>
-            <Field label="Banner image">
-              {product?.qualityBannerImage ? (
-                <div className="relative mb-3 h-32 w-48 overflow-hidden rounded-lg bg-surface-muted">
-                  <Image
-                    src={product.qualityBannerImage}
-                    alt=""
-                    fill
-                    sizes="200px"
-                    className="object-cover"
-                  />
-                </div>
-              ) : null}
-              <input
-                type="hidden"
-                name="currentQualityBannerImage"
-                value={product?.qualityBannerImage}
-              />
-              <FilePreviewInput name="qualityBannerImage" />
-            </Field>
-          </section>
+					<section className="grid grid-cols-2 gap-4 rounded-xl border border-surface-line bg-white p-5">
+						<Field label="Rating value (e.g. 4.9)">
+							<input
+								name="ratingValue"
+								type="number"
+								step="0.1"
+								min={0}
+								max={5}
+								defaultValue={product?.ratingValue ?? 4.9}
+								className={`${inputCls} w-full`}
+							/>
+						</Field>
+						<Field label="Rating count">
+							<input
+								name="ratingCount"
+								type="number"
+								min={0}
+								defaultValue={product?.ratingCount ?? 0}
+								className={`${inputCls} w-full`}
+							/>
+						</Field>
+					</section>
+				</div>
 
-          <RowSection
-            title="Specs table (optional — shown in the product detail section)"
-            ids={specs.ids}
-            onAdd={specs.add}
-            onRemove={specs.remove}
-            addLabel="+ Add spec row"
-            renderRow={(i) => (
-              <div className="flex items-center gap-3">
-                <input
-                  name="specLabel"
-                  placeholder="Label (e.g. মেটেরিয়াল)"
-                  defaultValue={product?.specs[i]?.label}
-                  className={`${inputCls} !w-1/3`}
-                />
-                <input
-                  name="specValue"
-                  placeholder="Value"
-                  defaultValue={product?.specs[i]?.value}
-                  className={`${inputCls} min-w-0 flex-1`}
-                />
-              </div>
-            )}
-          />
+				<div className="space-y-5">
+					<RowSection
+						title="Why choose us — bullets"
+						description="The four-column feature grid on this product's page."
+						ids={whyItems.ids}
+						onAdd={whyItems.add}
+						onRemove={whyItems.remove}
+						addLabel="+ Add bullet"
+						renderRow={(i) => (
+							<div className="space-y-2">
+								<div className="flex gap-3">
+									<input
+										name="whyNumber"
+										placeholder="No. (e.g. 01)"
+										defaultValue={product?.whyChooseUs[i]?.number}
+										className={`${inputCls} !w-20`}
+									/>
+									<input
+										name="whyTitle"
+										placeholder="Title"
+										defaultValue={product?.whyChooseUs[i]?.title}
+										className={`${inputCls} min-w-0 flex-1`}
+									/>
+								</div>
+								<textarea
+									name="whyDesc"
+									rows={2}
+									placeholder="Description"
+									defaultValue={product?.whyChooseUs[i]?.desc}
+									className={`${inputCls} w-full`}
+								/>
+							</div>
+						)}
+					/>
 
-          <RowSection
-            title="Size chart (optional)"
-            ids={sizeChart.ids}
-            onAdd={sizeChart.add}
-            onRemove={sizeChart.remove}
-            addLabel="+ Add size row"
-            renderRow={(i) => (
-              <div className="grid grid-cols-4 gap-3">
-                <input
-                  name="sizeChartSize"
-                  placeholder="Size"
-                  defaultValue={product?.sizeChart[i]?.size}
-                  className={`${inputCls} w-full`}
-                />
-                <input
-                  name="sizeChartChest"
-                  placeholder="Chest"
-                  defaultValue={product?.sizeChart[i]?.chest}
-                  className={`${inputCls} w-full`}
-                />
-                <input
-                  name="sizeChartLength"
-                  placeholder="Length"
-                  defaultValue={product?.sizeChart[i]?.length}
-                  className={`${inputCls} w-full`}
-                />
-                <input
-                  name="sizeChartShoulder"
-                  placeholder="Shoulder"
-                  defaultValue={product?.sizeChart[i]?.shoulder}
-                  className={`${inputCls} w-full`}
-                />
-              </div>
-            )}
-          />
-        </div>
-      </div>
+					<section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">
+						<SectionHeader
+							title="Quality banner content"
+							description="Visibility and position are controlled by “Page layout” above."
+						/>
+						<Field label="Title">
+							<input
+								name="qualityBannerTitle"
+								defaultValue={product?.qualityBannerTitle}
+								className={`${inputCls} w-full`}
+							/>
+						</Field>
+						<Field label="Description">
+							<textarea
+								name="qualityBannerDesc"
+								rows={2}
+								defaultValue={product?.qualityBannerDesc}
+								className={`${inputCls} w-full`}
+							/>
+						</Field>
+						<Field label="Badges — comma separated">
+							<input
+								name="qualityBannerBadges"
+								defaultValue={product?.qualityBannerBadges.join(", ")}
+								className={`${inputCls} w-full`}
+							/>
+						</Field>
+						<Field label="Banner image">
+							{product?.qualityBannerImage ? (
+								<div className="relative mb-3 h-32 w-48 overflow-hidden rounded-lg bg-surface-muted">
+									<Image
+										src={product.qualityBannerImage}
+										alt=""
+										fill
+										sizes="200px"
+										className="object-cover"
+									/>
+								</div>
+							) : null}
+							<input
+								type="hidden"
+								name="currentQualityBannerImage"
+								value={product?.qualityBannerImage}
+							/>
+							<FilePreviewInput name="qualityBannerImage" />
+						</Field>
+					</section>
 
-      <div className="sticky bottom-0 border-t border-surface-line bg-surface-muted/95 py-4 backdrop-blur">
-        <button
-          type="submit"
-          className="rounded-lg bg-brand px-6 py-3 font-bold text-white hover:bg-brand-dark"
-        >
-          {submitLabel}
-        </button>
-      </div>
-    </form>
-  );
+					<RowSection
+						title="Specs table (optional — shown in the product detail section)"
+						ids={specs.ids}
+						onAdd={specs.add}
+						onRemove={specs.remove}
+						addLabel="+ Add spec row"
+						renderRow={(i) => (
+							<div className="flex items-center gap-3">
+								<input
+									name="specLabel"
+									placeholder="Label (e.g. মেটেরিয়াল)"
+									defaultValue={product?.specs[i]?.label}
+									className={`${inputCls} !w-1/3`}
+								/>
+								<input
+									name="specValue"
+									placeholder="Value"
+									defaultValue={product?.specs[i]?.value}
+									className={`${inputCls} min-w-0 flex-1`}
+								/>
+							</div>
+						)}
+					/>
+
+					<RowSection
+						title="Size chart (optional)"
+						ids={sizeChart.ids}
+						onAdd={sizeChart.add}
+						onRemove={sizeChart.remove}
+						addLabel="+ Add size row"
+						renderRow={(i) => (
+							<div className="grid grid-cols-4 gap-3">
+								<input
+									name="sizeChartSize"
+									placeholder="Size"
+									defaultValue={product?.sizeChart[i]?.size}
+									className={`${inputCls} w-full`}
+								/>
+								<input
+									name="sizeChartChest"
+									placeholder="Chest"
+									defaultValue={product?.sizeChart[i]?.chest}
+									className={`${inputCls} w-full`}
+								/>
+								<input
+									name="sizeChartLength"
+									placeholder="Length"
+									defaultValue={product?.sizeChart[i]?.length}
+									className={`${inputCls} w-full`}
+								/>
+								<input
+									name="sizeChartShoulder"
+									placeholder="Shoulder"
+									defaultValue={product?.sizeChart[i]?.shoulder}
+									className={`${inputCls} w-full`}
+								/>
+							</div>
+						)}
+					/>
+				</div>
+			</div>
+
+			<div className="sticky bottom-0 border-t border-surface-line bg-surface-muted/95 py-4 backdrop-blur">
+				<button
+					type="submit"
+					className="rounded-lg bg-brand px-6 py-3 font-bold text-white hover:bg-brand-dark"
+				>
+					{submitLabel}
+				</button>
+			</div>
+		</form>
+	);
 }

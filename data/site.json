@@ -65,10 +65,10 @@
 		],
 		"sizes": [],
 		"colors": [
-			{ "name": "কালো", "hex": "#1a1a1a" },
-			{ "name": "অফ হোয়াইট", "hex": "#e8e4dc" },
-			{ "name": "নেভি ব্লু", "hex": "#1d2a4e" },
-			{ "name": "লাল", "hex": "#c42b2b" }
+			{ "name": "কালো", "hex": "#1a1a1a", "image": "/images/products/sunglass/1.png" },
+			{ "name": "অফ হোয়াইট", "hex": "#e8e4dc", "image": "/images/products/sunglass/2.png" },
+			{ "name": "নেভি ব্লু", "hex": "#1d2a4e", "image": "/images/products/sunglass/3.png" },
+			{ "name": "লাল", "hex": "#c42b2b", "image": "/images/products/sunglass/4.png" }
 		],
 		"rating": { "value": 4.9, "count": 28 },
 		"specs": [
