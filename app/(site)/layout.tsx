@@ -1,5 +1,4 @@
 import Script from "next/script";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import content from "@/data/site.json";
 import { getSiteSettings } from "@/lib/settings";
@@ -85,7 +84,6 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
-      <Header logoUrl={settings.logoUrl} />
       <main className="flex-1">{children}</main>
       <Footer
         logoUrl={settings.logoUrl}
