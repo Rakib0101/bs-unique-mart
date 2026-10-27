@@ -19,7 +19,6 @@ import {
 import { updateOrderStatus } from "@/lib/orders";
 import { updateSiteSettings } from "@/lib/settings";
 import { uniqueProductSlug } from "@/lib/slug";
-import { saveUpload } from "@/lib/uploads";
 import { count, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -145,13 +144,11 @@ export async function changePasswordAction(formData: FormData) {
 	redirect("/admin/settings?pwsuccess=1");
 }
 
-async function uploadNewImages(files: FormDataEntryValue[]) {
-	const urls: string[] = [];
-	for (const file of files) {
-		if (!(file instanceof File) || file.size === 0) continue;
-		urls.push(await saveUpload(file, "products"));
-	}
-	return urls;
+// Images are uploaded client-side straight to Blob storage (see
+// FilePreviewInput) -- the form field already carries the resulting URL
+// strings, not File objects, so this just filters out empty slots.
+function readNewImageUrls(values: FormDataEntryValue[]) {
+	return values.filter((v): v is string => typeof v === "string" && v.trim().length > 0);
 }
 
 function readRows(
@@ -287,8 +284,8 @@ export async function createProductAction(formData: FormData) {
 	const db = getDb();
 
 	const fields = readProductFields(formData);
-	const newImages = await uploadNewImages(formData.getAll("images"));
-	const qualityBannerImage = await uploadSingleImage(
+	const newImages = readNewImageUrls(formData.getAll("images"));
+	const qualityBannerImage = resolveImageUrl(
 		formData.get("qualityBannerImage"),
 		"",
 	);
@@ -338,12 +335,12 @@ export async function updateProductAction(id: number, formData: FormData) {
 
 	const fields = readProductFields(formData);
 	const keepImages = formData.getAll("keepImages").map((v) => String(v));
-	const newImages = await uploadNewImages(formData.getAll("images"));
+	const newImages = readNewImageUrls(formData.getAll("images"));
 	const images = [...keepImages, ...newImages];
 	const currentBannerImage = String(
 		formData.get("currentQualityBannerImage") || "",
 	);
-	const qualityBannerImage = await uploadSingleImage(
+	const qualityBannerImage = resolveImageUrl(
 		formData.get("qualityBannerImage"),
 		currentBannerImage,
 	);
@@ -428,12 +425,12 @@ export async function updateOrderStatusAction(id: number, formData: FormData) {
 	redirect("/admin/orders");
 }
 
-async function uploadSingleImage(
-	file: FormDataEntryValue | null,
-	fallback: string,
-) {
-	if (!(file instanceof File) || file.size === 0) return fallback;
-	return saveUpload(file, "settings");
+// Single-image fields (logo, favicon, quality banner) are also uploaded
+// client-side to Blob -- pick the new URL if one came through, else keep
+// the existing value.
+function resolveImageUrl(value: FormDataEntryValue | null, fallback: string) {
+	const url = typeof value === "string" ? value.trim() : "";
+	return url || fallback;
 }
 
 export async function updateSettingsAction(formData: FormData) {
@@ -456,8 +453,8 @@ export async function updateSettingsAction(formData: FormData) {
 
 	const currentLogoUrl = String(formData.get("currentLogoUrl") || "");
 	const currentFaviconUrl = String(formData.get("currentFaviconUrl") || "");
-	const logoUrl = await uploadSingleImage(formData.get("logo"), currentLogoUrl);
-	const faviconUrl = await uploadSingleImage(
+	const logoUrl = resolveImageUrl(formData.get("logo"), currentLogoUrl);
+	const faviconUrl = resolveImageUrl(
 		formData.get("favicon"),
 		currentFaviconUrl,
 	);

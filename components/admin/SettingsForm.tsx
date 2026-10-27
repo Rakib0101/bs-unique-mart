@@ -4,6 +4,8 @@ import Image from "next/image";
 import type { SiteSettings } from "@/lib/db/schema";
 import { Field, RowSection, SectionHeader, inputCls, useRows } from "@/components/admin/form-helpers";
 import FilePreviewInput from "@/components/admin/FilePreviewInput";
+import SubmitButton from "@/components/admin/SubmitButton";
+import { UploadStatusProvider } from "@/components/admin/UploadStatusContext";
 
 export default function SettingsForm({
   action,
@@ -15,6 +17,7 @@ export default function SettingsForm({
   const zones = useRows(settings.deliveryZones.length || 1);
 
   return (
+    <UploadStatusProvider>
     <form action={action} className="max-w-4xl">
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <section className="space-y-4 rounded-xl border border-surface-line bg-white p-5">
@@ -145,13 +148,12 @@ export default function SettingsForm({
       </div>
 
       <div className="sticky bottom-0 mt-5 border-t border-surface-line bg-surface-muted/95 py-4 backdrop-blur">
-        <button
-          type="submit"
-          className="rounded-lg bg-brand px-6 py-3 font-bold text-white hover:bg-brand-dark"
-        >
-          Save settings
-        </button>
+        <SubmitButton
+          label="Save settings"
+          className="rounded-lg bg-brand px-6 py-3 font-bold text-white hover:bg-brand-dark disabled:opacity-50"
+        />
       </div>
     </form>
+    </UploadStatusProvider>
   );
 }

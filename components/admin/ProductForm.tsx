@@ -9,7 +9,9 @@ import {
 	useRows,
 } from "@/components/admin/form-helpers";
 import SectionOrderEditor from "@/components/admin/SectionOrderEditor";
+import SubmitButton from "@/components/admin/SubmitButton";
 import ToggleSwitch from "@/components/admin/ToggleSwitch";
+import { UploadStatusProvider } from "@/components/admin/UploadStatusContext";
 import type { Product } from "@/lib/db/schema";
 import { DEFAULT_SECTIONS } from "@/lib/db/schema";
 import Image from "next/image";
@@ -33,6 +35,7 @@ export default function ProductForm({
 	const existingImages = product?.images || [];
 
 	return (
+		<UploadStatusProvider>
 		<form action={action} className="max-w-5xl space-y-5">
 			<section className="space-y-4 rounded-xl border border-surface-line bg-white p-6">
 				<h2 className="font-bold text-ink">Basic info</h2>
@@ -395,13 +398,12 @@ export default function ProductForm({
 			</div>
 
 			<div className="sticky bottom-0 border-t border-surface-line bg-surface-muted/95 py-4 backdrop-blur">
-				<button
-					type="submit"
-					className="rounded-lg bg-brand px-6 py-3 font-bold text-white hover:bg-brand-dark"
-				>
-					{submitLabel}
-				</button>
+				<SubmitButton
+					label={submitLabel}
+					className="rounded-lg bg-brand px-6 py-3 font-bold text-white hover:bg-brand-dark disabled:opacity-50"
+				/>
 			</div>
 		</form>
+		</UploadStatusProvider>
 	);
 }

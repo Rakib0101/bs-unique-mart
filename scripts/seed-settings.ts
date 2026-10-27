@@ -7,7 +7,6 @@ async function main() {
 
   await db
     .insert(siteSettings)
-    .ignore()
     .values({
       id: 1,
       phones: content.brand.phones,
@@ -19,7 +18,8 @@ async function main() {
       fbPixelId: "",
       googleSheetsWebhookUrl: "",
       googleSheetsWebhookSecret: "",
-    });
+    })
+    .onConflictDoNothing();
 
   console.log("Seeded site settings.");
 }

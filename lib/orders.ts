@@ -15,7 +15,7 @@ export async function getOrderById(id: number): Promise<Order | null> {
 export async function createOrder(
   order: Omit<NewOrder, "id" | "status" | "createdAt">,
 ): Promise<number> {
-  const [row] = await getDb().insert(orders).values(order).$returningId();
+  const [row] = await getDb().insert(orders).values(order).returning({ id: orders.id });
   return row.id;
 }
 

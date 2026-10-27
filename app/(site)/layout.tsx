@@ -51,7 +51,9 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     "@type": "Organization",
     name: content.brand.name,
     url: siteUrl,
-    logo: `${siteUrl}${settings.logoUrl || "/images/BS_Unique_Mart_Logo.png"}`,
+    // Admin-uploaded logos are absolute Blob URLs; only the static default
+    // fallback is a root-relative path that needs siteUrl prefixed.
+    logo: settings.logoUrl || `${siteUrl}/images/BS_Unique_Mart_Logo.png`,
     contactPoint: {
       "@type": "ContactPoint",
       telephone: settings.phones[0] ?? content.brand.phones[0],

@@ -7,12 +7,12 @@ async function main() {
 
   await db
     .insert(users)
-    .ignore()
     .values({
       username: "admin",
       passwordHash: await hashPassword("password"),
       role: "admin",
-    });
+    })
+    .onConflictDoNothing();
 
   console.log('Ensured default admin user "admin" exists.');
 }

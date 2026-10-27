@@ -23,7 +23,6 @@ async function main() {
 
   await db
     .insert(products)
-    .ignore()
     .values({
       slug: flagship.slug,
       title: flagship.title,
@@ -46,13 +45,13 @@ async function main() {
       qualityBannerBadges: content.qualityBanner.badges,
       qualityBannerImage: content.qualityBanner.image,
       sections: DEFAULT_SECTIONS,
-    });
+    })
+    .onConflictDoNothing();
 
   for (let i = 0; i < related.length; i++) {
     const p = related[i];
     await db
       .insert(products)
-      .ignore()
       .values({
         slug: p.slug,
         title: p.title,
@@ -73,7 +72,8 @@ async function main() {
         qualityBannerBadges: [],
         qualityBannerImage: "",
         sections: DEFAULT_SECTIONS,
-      });
+      })
+      .onConflictDoNothing();
   }
 
   console.log(`Seeded ${1 + related.length} products.`);
