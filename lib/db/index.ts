@@ -6,6 +6,12 @@ function createDb() {
   const pool = mysql.createPool({
     uri: process.env.DATABASE_URL!,
     charset: "utf8mb4",
+    waitForConnections: true,
+    connectionLimit: 5,
+    queueLimit: 20,
+    idleTimeout: 30000, // close idle connections after 30 seconds
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 10000,
   });
 
   // The DB host's session time_zone is 'SYSTEM', which resolves to

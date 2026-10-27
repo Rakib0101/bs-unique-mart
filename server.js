@@ -53,13 +53,20 @@ function serveUpload(req, res) {
 }
 
 app.prepare().then(() => {
-  createServer((req, res) => {
+  const server = createServer((req, res) => {
     if (req.url.startsWith("/uploads/")) {
       serveUpload(req, res);
       return;
     }
     handle(req, res);
-  }).listen(port, () => {
+  });
+
+  // Keep-alive and request timeouts to prevent idle sockets from hoarding worker processes
+  server.keepAliveTimeout = 5000;
+  server.headersTimeout = 6000;
+  server.requestTimeout = 30000;
+
+  server.listen(port, () => {
     console.log(`> Ready on port ${port}`);
   });
 });

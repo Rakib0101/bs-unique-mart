@@ -98,6 +98,7 @@ export async function POST(request: Request) {
       const res = await fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: AbortSignal.timeout(6000), // Prevent hanging worker processes if Google Sheets is slow
         body: JSON.stringify({
           secret: webhookSecret,
           appOrderId,
