@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/db/schema";
+import Image from "next/image";
 import HeroGallery from "./HeroGallery";
 
 export default function Hero({ product: p }: { product: Product }) {
@@ -11,10 +12,18 @@ export default function Hero({ product: p }: { product: Product }) {
 		>
 			<div className="container-page relative z-10 py-12 text-center sm:py-16">
 				<div className="mx-auto max-w-5xl">
-					<h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
+					<Image
+						src="/logo.png"
+						alt="BS Unique Mart"
+						width={391}
+						height={56}
+						priority
+						className="mx-auto h-auto w-48 sm:w-56 md:w-64"
+					/>
+					<h1 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
 						{p.title}
 					</h1>
-					<p className="mx-auto mt-3 text-sm sm:text-base md:text-[28px] text-white/75">
+					<p className="mx-auto mt-3 text-[26px] text-white/75">
 						{p.subtitle}
 					</p>
 
