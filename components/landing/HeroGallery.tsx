@@ -37,15 +37,15 @@ export default function HeroGallery({
 
 	return (
 		<div className="mx-auto flex w-full flex-col items-center">
-			{/* Active Image Showcase: wide presentation independent of thumbnail grid */}
-			<div className="w-full max-w-155 sm:max-w-175 md:max-w-190 lg:max-w-200">
+			{/* Active Image Showcase: responsive on mobile, max 430px height on desktop */}
+			<div className="w-full max-w-[578px]">
 				<div className="overflow-hidden border-8 sm:border-10 md:border-12 border-white bg-ink-soft shadow-2xl">
-					<div className="relative aspect-900/670 w-full">
+					<div className="relative aspect-900/670 w-full md:max-h-[430px]">
 						<Image
 							src={activeItem.full}
 							alt={activeItem.alt || alt}
 							fill
-							sizes="(max-width: 768px) 95vw, 800px"
+							sizes="(max-width: 768px) 95vw, 578px"
 							className="object-cover"
 							priority
 						/>

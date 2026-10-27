@@ -23,7 +23,7 @@ export default function Hero({ product: p }: { product: Product }) {
 					<h1 className="mt-10 text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
 						{p.title}
 					</h1>
-					<p className="mx-auto mt-3 text-[26px] text-white/75">
+					<p className="mx-auto mt-3 text-[14px] md:text-[20px] text-white/75">
 						{p.subtitle}
 					</p>
 
