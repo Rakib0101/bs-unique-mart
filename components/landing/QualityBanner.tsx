@@ -13,7 +13,7 @@ export default function QualityBanner({
 	image: string;
 }) {
 	return (
-		<section className="bg-ink text-white">
+		<section className="bg-ink py-16 text-white sm:py-24">
 			<div className="container-page grid items-center gap-10 lg:grid-cols-2">
 				<div>
 					{content.qualityBanner.eyebrow ? (
