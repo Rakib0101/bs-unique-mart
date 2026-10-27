@@ -6,7 +6,7 @@ export default function ProductDetail({ product: p }: { product: Product }) {
 	const detailImage = p.images[1] ?? p.images[0];
 
 	return (
-		<section className="py-16 sm:py-24">
+		<section className="py-10 sm:py-[60px]">
 			<div className="container-page grid gap-16 lg:grid-cols-2 lg:items-center">
 				{detailImage ? (
 					<Image

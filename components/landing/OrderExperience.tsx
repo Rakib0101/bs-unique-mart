@@ -118,7 +118,7 @@ export default function OrderExperience({
 		<>
 			{/* Related styles section */}
 			{showRelated && otherProducts.length > 0 ? (
-				<section id="related" className="py-16 sm:py-20 bg-white">
+				<section id="related" className="py-10 sm:py-[60px] bg-white">
 					<div className="container-page text-center">
 						<p className="text-sm font-semibold uppercase tracking-wide text-brand">
 							{content.relatedSection.eyebrow}
@@ -168,7 +168,7 @@ export default function OrderExperience({
 			) : null}
 
 			{/* 100% Figma Match Checkout Form Section */}
-			<section id="order" className="scroll-mt-10 py-10 sm:py-16 bg-[#FDDDCE]">
+			<section id="order" className="scroll-mt-10 py-10 sm:py-[60px] bg-[#FDDDCE]">
 				<div className="container-page">
 					<form
 						onSubmit={handleSubmit}

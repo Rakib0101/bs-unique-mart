@@ -10,7 +10,7 @@ export default function Hero({ product: p }: { product: Product }) {
 			className="relative overflow-hidden text-white"
 			style={{ background: "linear-gradient(180deg, #212121 0%, #878787 100%)" }}
 		>
-			<div className="container-page relative z-10 py-12 text-center sm:py-16">
+			<div className="container-page relative z-10 py-10 text-center sm:py-[60px]">
 				<div className="mx-auto max-w-5xl">
 					<Image
 						src="/logo.png"
