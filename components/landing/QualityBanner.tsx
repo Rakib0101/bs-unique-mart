@@ -13,9 +13,9 @@ export default function QualityBanner({
 	image: string;
 }) {
 	return (
-		<section className="bg-ink py-10 text-white sm:py-[60px]">
+		<section className="bg-ink py-10 text-white sm:py-[60px] lg:py-0">
 			<div className="container-page grid items-center gap-10 lg:grid-cols-2">
-				<div>
+				<div className="py-8 lg:py-12">
 					{content.qualityBanner.eyebrow ? (
 						<p className="text-sm font-semibold uppercase tracking-wide text-brand">
 							{content.qualityBanner.eyebrow}
@@ -45,7 +45,7 @@ export default function QualityBanner({
 					alt={title || "Premium Quality Sunglasses"}
 					width={710}
 					height={584}
-					className="w-full object-cover lg:order-last"
+					className="block w-full object-cover lg:order-last"
 				/>
 			</div>
 		</section>
