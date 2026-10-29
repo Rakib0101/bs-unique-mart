@@ -4,6 +4,7 @@ import WhyChooseUs from "@/components/landing/WhyChooseUs";
 import ProductDetail from "@/components/landing/ProductDetail";
 import QualityBanner from "@/components/landing/QualityBanner";
 import OrderExperience from "@/components/landing/OrderExperience";
+import ScrollToTop from "@/components/landing/ScrollToTop";
 import { DEFAULT_SECTIONS, type DeliveryZone, type Product, type SectionType } from "@/lib/db/schema";
 
 export default function ProductLandingPage({
@@ -43,6 +44,7 @@ export default function ProductLandingPage({
         deliveryZones={deliveryZones}
         showRelated={product.showRelatedProducts}
       />
+      <ScrollToTop />
     </>
   );
 }
