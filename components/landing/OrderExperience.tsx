@@ -13,10 +13,15 @@ const BD_PHONE_RE = /^01[3-9]\d{8}$/;
 
 type FbqFn = (...args: unknown[]) => void;
 
-function trackPurchase(value: number) {
+function trackPurchase(value: number, phone: string) {
 	if (typeof window === "undefined") return;
 	const fbq = (window as unknown as { fbq?: FbqFn }).fbq;
-	fbq?.("track", "Purchase", { value, currency: "BDT" });
+	if (!fbq) return;
+	// Advanced Matching needs digits-only, country-code-prefixed phone (no
+	// leading 0, no "+") -- e.g. 01712345678 -> 8801712345678.
+	const phoneForMatching = phone.replace(/\D/g, "").replace(/^0/, "880");
+	fbq("set", "userData", { ph: phoneForMatching });
+	fbq("track", "Purchase", { value, currency: "BDT" });
 }
 
 export default function OrderExperience({
@@ -106,7 +111,7 @@ export default function OrderExperience({
 			const data = await res.json();
 			if (!res.ok || !data.ok) throw new Error(data.error || "failed");
 
-			trackPurchase(total);
+			trackPurchase(total, phone.trim());
 			router.push("/order-success");
 		} catch {
 			setStatus("error");
