@@ -105,6 +105,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             fbq('set', 'autoConfig', false, '${settings.fbPixelId}');
             fbq('init', '${settings.fbPixelId}');
             fbq('track', 'PageView');
+            window.__FB_PIXEL_ID__ = '${settings.fbPixelId}';
           `}
         </Script>
       ) : null}

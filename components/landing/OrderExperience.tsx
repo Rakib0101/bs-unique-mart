@@ -15,13 +15,15 @@ type FbqFn = (...args: unknown[]) => void;
 
 function trackPurchase(value: number, phone: string) {
 	if (typeof window === "undefined") return;
-	const fbq = (window as unknown as { fbq?: FbqFn }).fbq;
-	if (!fbq) return;
+	const w = window as unknown as { fbq?: FbqFn; __FB_PIXEL_ID__?: string };
+	if (!w.fbq || !w.__FB_PIXEL_ID__) return;
 	// Advanced Matching needs digits-only, country-code-prefixed phone (no
-	// leading 0, no "+") -- e.g. 01712345678 -> 8801712345678.
+	// leading 0, no "+") -- e.g. 01712345678 -> 8801712345678. Re-init with
+	// the matching data right before the event, per Meta's manual Advanced
+	// Matching pattern (fbq('set','userData',...) does not apply it here).
 	const phoneForMatching = phone.replace(/\D/g, "").replace(/^0/, "880");
-	fbq("set", "userData", { ph: phoneForMatching });
-	fbq("track", "Purchase", { value, currency: "BDT" });
+	w.fbq("init", w.__FB_PIXEL_ID__, { ph: phoneForMatching });
+	w.fbq("track", "Purchase", { value, currency: "BDT" });
 }
 
 export default function OrderExperience({
