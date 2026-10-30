@@ -48,7 +48,7 @@ export default function SettingsForm({
               <input
                 type="color"
                 name="primaryColor"
-                defaultValue={settings.primaryColor || "#d91b32"}
+                defaultValue={settings.primaryColor || "#d51a31"}
                 className="h-10 w-14 rounded-md border border-surface-line"
               />
               <span className="text-xs text-ink/50">

@@ -221,7 +221,7 @@ export default function OrderExperience({
 												৳{product.price.toLocaleString("en-US")}
 											</span>
 											{product.comparePrice ? (
-												<span className="text-base text-[#777777] line-through">
+												<span className="text-base text-[#747474] line-through">
 													৳{product.comparePrice.toLocaleString("en-US")}
 												</span>
 											) : null}
@@ -335,7 +335,7 @@ export default function OrderExperience({
 											value={name}
 											onChange={(e) => setName(e.target.value)}
 											placeholder="আপনার সম্পূর্ণ নাম লিখুন"
-											className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors"
+											className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#70757d] outline-none focus:border-ink transition-colors"
 										/>
 									</div>
 
@@ -353,7 +353,7 @@ export default function OrderExperience({
 												value={phone}
 												onChange={(e) => setPhone(e.target.value)}
 												placeholder="01XXXXXXXXX"
-												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors"
+												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#70757d] outline-none focus:border-ink transition-colors"
 											/>
 										</div>
 
@@ -367,7 +367,7 @@ export default function OrderExperience({
 												value={email}
 												onChange={(e) => setEmail(e.target.value)}
 												placeholder="আপনার ইমেইল ঠিকানা"
-												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors"
+												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#70757d] outline-none focus:border-ink transition-colors"
 											/>
 										</div>
 									</div>
@@ -384,7 +384,7 @@ export default function OrderExperience({
 											value={address}
 											onChange={(e) => setAddress(e.target.value)}
 											placeholder="বাসা/রোড, এলাকা ও থানার নাম লিখুন"
-											className="w-full py-3 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors resize-none"
+											className="w-full py-3 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#70757d] outline-none focus:border-ink transition-colors resize-none"
 										/>
 									</div>
 
@@ -532,7 +532,7 @@ export default function OrderExperience({
 								className={`w-full py-3.5 font-bold text-base text-white rounded-none transition-all ${
 									isFormFilled
 										? "bg-brand hover:bg-brand-dark shadow-md cursor-pointer"
-										: "bg-[#767676] hover:bg-[#5E5E5E] cursor-pointer"
+										: "bg-[#747474] hover:bg-[#595959] cursor-pointer"
 								} disabled:opacity-60`}
 							>
 								{status === "submitting"
@@ -556,7 +556,7 @@ export default function OrderExperience({
 									</svg>
 									<span>আপনার তথ্য নিরাপদ ও সুরক্ষিত</span>
 								</div>
-								<p className="mt-1 text-xs text-[#727780]">
+								<p className="mt-1 text-xs text-[#70757d]">
 									সাধারণত ২-৪ কার্যদিবসের মধ্যে ডেলিভারি।
 								</p>
 							</div>

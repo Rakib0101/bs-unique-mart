@@ -7,7 +7,7 @@
 @theme {
   /* Darkened ~4% from #e21c34 so text-brand on light badge backgrounds
      (#FDEFED, #FDDDCE) clears WCAG AA 4.5:1 -- see PageSpeed a11y fixes. */
-  --color-brand: #d91b32;
+  --color-brand: #d51a31;
   --color-brand-dark: #c81730;
 }
 
