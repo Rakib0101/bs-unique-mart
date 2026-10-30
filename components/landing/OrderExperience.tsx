@@ -200,7 +200,6 @@ export default function OrderExperience({
 												fill
 												sizes="(max-width: 768px) 100vw, 480px"
 												className="object-cover object-top transition-all duration-200"
-												priority
 											/>
 										</div>
 

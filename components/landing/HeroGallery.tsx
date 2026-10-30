@@ -45,9 +45,10 @@ export default function HeroGallery({
 							src={activeItem.full}
 							alt={activeItem.alt || alt}
 							fill
-							sizes="(max-width: 768px) 95vw, 578px"
+							sizes="(max-width: 768px) 92vw, 578px"
 							className="object-cover"
 							priority
+							fetchPriority="high"
 						/>
 					</div>
 				</div>
