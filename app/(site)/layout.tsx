@@ -7,9 +7,10 @@ import { darken } from "@/lib/color";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bsuniquemart.com";
 const p = content.flagshipProduct;
 
-// Every page here reads site settings from the database — render on
-// request instead of at build time, so CI builds never need DB access.
-export const dynamic = "force-dynamic";
+// Every page here reads from the database but has no per-user/per-request
+// data (no cookies, no auth) -- serve a cached copy and regenerate it in
+// the background at most every 5 minutes instead of rendering on demand.
+export const revalidate = 300;
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
