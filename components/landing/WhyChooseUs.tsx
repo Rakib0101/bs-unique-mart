@@ -11,7 +11,7 @@ export default function WhyChooseUs({ items }: { items: WhyChooseItem[] }) {
 				<h2 className="mt-2 text-2xl font-bold sm:text-3xl md:text-[40px] text-ink">
 					{content.whyChooseSection.title}
 				</h2>
-				<p className="mt-4 text-base text-ink/60">
+				<p className="mt-4 text-base text-ink/70">
 					{content.whyChooseSection.description}
 				</p>
 

@@ -473,7 +473,7 @@ export async function updateSettingsAction(formData: FormData) {
 		deliveryZones,
 		logoUrl,
 		faviconUrl,
-		primaryColor: primaryColor || "#e21c34",
+		primaryColor: primaryColor || "#d91b32",
 		fbPixelId,
 		googleSheetsWebhookUrl,
 		googleSheetsWebhookSecret,

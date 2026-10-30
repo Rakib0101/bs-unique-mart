@@ -221,7 +221,7 @@ export default function OrderExperience({
 												৳{product.price.toLocaleString("en-US")}
 											</span>
 											{product.comparePrice ? (
-												<span className="text-base text-[#8C8C8C] line-through">
+												<span className="text-base text-[#777777] line-through">
 													৳{product.comparePrice.toLocaleString("en-US")}
 												</span>
 											) : null}
@@ -325,62 +325,66 @@ export default function OrderExperience({
 								<div className="space-y-4">
 									{/* Name field */}
 									<div>
-										<label className="block text-xs font-semibold text-[#333333] mb-1.5">
+										<label htmlFor="order-name" className="block text-xs font-semibold text-[#333333] mb-1.5">
 											আপনার নাম <span className="text-brand">*</span>
 										</label>
 										<input
+											id="order-name"
 											required
 											type="text"
 											value={name}
 											onChange={(e) => setName(e.target.value)}
 											placeholder="আপনার সম্পূর্ণ নাম লিখুন"
-											className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#9CA3AF] outline-none focus:border-ink transition-colors"
+											className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors"
 										/>
 									</div>
 
 									{/* Phone & Email fields */}
 									<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 										<div>
-											<label className="block text-xs font-semibold text-[#333333] mb-1.5">
+											<label htmlFor="order-phone" className="block text-xs font-semibold text-[#333333] mb-1.5">
 												মোবাইল নম্বর <span className="text-brand">*</span>
 											</label>
 											<input
+												id="order-phone"
 												required
 												type="tel"
 												inputMode="numeric"
 												value={phone}
 												onChange={(e) => setPhone(e.target.value)}
 												placeholder="01XXXXXXXXX"
-												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#9CA3AF] outline-none focus:border-ink transition-colors"
+												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors"
 											/>
 										</div>
 
 										<div>
-											<label className="block text-xs font-semibold text-[#333333] mb-1.5">
+											<label htmlFor="order-email" className="block text-xs font-semibold text-[#333333] mb-1.5">
 												ইমেইল
 											</label>
 											<input
+												id="order-email"
 												type="email"
 												value={email}
 												onChange={(e) => setEmail(e.target.value)}
 												placeholder="আপনার ইমেইল ঠিকানা"
-												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#9CA3AF] outline-none focus:border-ink transition-colors"
+												className="w-full h-12 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors"
 											/>
 										</div>
 									</div>
 
 									{/* Full Address field */}
 									<div>
-										<label className="block text-xs font-semibold text-[#333333] mb-1.5">
+										<label htmlFor="order-address" className="block text-xs font-semibold text-[#333333] mb-1.5">
 											সম্পূর্ণ ঠিকানা <span className="text-brand">*</span>
 										</label>
 										<textarea
+											id="order-address"
 											required
 											rows={2}
 											value={address}
 											onChange={(e) => setAddress(e.target.value)}
 											placeholder="বাসা/রোড, এলাকা ও থানার নাম লিখুন"
-											className="w-full py-3 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#9CA3AF] outline-none focus:border-ink transition-colors resize-none"
+											className="w-full py-3 px-3.5 rounded-none border border-[#E5E5E5] text-sm text-ink placeholder-[#727780] outline-none focus:border-ink transition-colors resize-none"
 										/>
 									</div>
 
@@ -528,7 +532,7 @@ export default function OrderExperience({
 								className={`w-full py-3.5 font-bold text-base text-white rounded-none transition-all ${
 									isFormFilled
 										? "bg-brand hover:bg-brand-dark shadow-md cursor-pointer"
-										: "bg-[#BCBCBC] hover:bg-[#A8A8A8] cursor-pointer"
+										: "bg-[#767676] hover:bg-[#5E5E5E] cursor-pointer"
 								} disabled:opacity-60`}
 							>
 								{status === "submitting"
@@ -552,7 +556,7 @@ export default function OrderExperience({
 									</svg>
 									<span>আপনার তথ্য নিরাপদ ও সুরক্ষিত</span>
 								</div>
-								<p className="mt-1 text-xs text-[#9CA3AF]">
+								<p className="mt-1 text-xs text-[#727780]">
 									সাধারণত ২-৪ কার্যদিবসের মধ্যে ডেলিভারি।
 								</p>
 							</div>

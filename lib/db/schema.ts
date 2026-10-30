@@ -115,7 +115,7 @@ export const siteSettings = pgTable("site_settings", {
   deliveryZones: jsonb("delivery_zones").$type<DeliveryZone[]>().notNull(),
   logoUrl: text("logo_url").notNull(),
   faviconUrl: text("favicon_url").notNull(),
-  primaryColor: varchar("primary_color", { length: 7 }).notNull().default("#e21c34"),
+  primaryColor: varchar("primary_color", { length: 7 }).notNull().default("#d91b32"),
   fbPixelId: varchar("fb_pixel_id", { length: 64 }).notNull(),
   googleSheetsWebhookUrl: text("google_sheets_webhook_url").notNull(),
   googleSheetsWebhookSecret: varchar("google_sheets_webhook_secret", { length: 255 }).notNull(),

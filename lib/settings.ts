@@ -14,7 +14,7 @@ const FALLBACK: SiteSettings = {
   deliveryZones: [],
   logoUrl: "",
   faviconUrl: "",
-  primaryColor: "#e21c34",
+  primaryColor: "#d91b32",
   fbPixelId: "",
   googleSheetsWebhookUrl: "",
   googleSheetsWebhookSecret: "",

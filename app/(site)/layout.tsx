@@ -68,7 +68,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     },
   };
 
-  const brand = settings.primaryColor || "#e21c34";
+  const brand = settings.primaryColor || "#d91b32";
 
   return (
     <div className="flex min-h-full flex-col">
