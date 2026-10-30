@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ["image/avif", "image/webp"],
+    // Blob storage URLs already carry a random suffix per upload -- a given
+    // URL+width+quality combination never changes content, so it's safe to
+    // cache the optimized output as long as static assets.
+    minimumCacheTTL: 31536000,
   },
   experimental: {
     // The only UI library in this codebase -- admin-only (product section
