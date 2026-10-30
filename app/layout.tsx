@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Hind_Siliguri, Inter, Outfit } from "next/font/google";
+import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 import content from "@/data/site.json";
 import { getSiteSettings } from "@/lib/settings";
@@ -8,18 +8,6 @@ const hindSiliguri = Hind_Siliguri({
   variable: "--font-hind-siliguri",
   subsets: ["bengali", "latin"],
   weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["700"],
   display: "swap",
 });
 
@@ -112,18 +100,7 @@ const baseMetadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="bn"
-      className={`${hindSiliguri.variable} ${inter.variable} ${outfit.variable} h-full`}
-    >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="bn" className={`${hindSiliguri.variable} h-full`}>
       <body className={`${hindSiliguri.className} font-sans min-h-full antialiased`}>
         {children}
       </body>
