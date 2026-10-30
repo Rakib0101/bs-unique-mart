@@ -3,6 +3,7 @@ import HighlightsBar from "@/components/landing/HighlightsBar";
 import WhyChooseUs from "@/components/landing/WhyChooseUs";
 import ProductDetail from "@/components/landing/ProductDetail";
 import QualityBanner from "@/components/landing/QualityBanner";
+import RelatedProducts from "@/components/landing/RelatedProducts";
 import OrderExperience from "@/components/landing/OrderExperience";
 import ScrollToTop from "@/components/landing/ScrollToTop";
 import { DEFAULT_SECTIONS, type DeliveryZone, type Product, type SectionType } from "@/lib/db/schema";
@@ -40,13 +41,8 @@ export default function ProductLandingPage({
     <>
       <Hero product={product} />
       {sections.filter((s) => s.visible).map((s) => renderers[s.type]())}
-      <OrderExperience
-        product={product}
-        otherProducts={otherProducts}
-        deliveryZones={deliveryZones}
-        showRelated={product.showRelatedProducts}
-        fbPixelId={fbPixelId}
-      />
+      {product.showRelatedProducts ? <RelatedProducts products={otherProducts} /> : null}
+      <OrderExperience product={product} deliveryZones={deliveryZones} fbPixelId={fbPixelId} />
       <ScrollToTop />
     </>
   );

@@ -1,12 +1,10 @@
 "use client";
 
-import content from "@/data/site.json";
 import type { DeliveryZone, Product } from "@/lib/db/schema";
-import { formatPrice, toBanglaDigits } from "@/lib/format";
+import { toBanglaDigits } from "@/lib/format";
 import type { OrderPayload } from "@/lib/types";
 import { loadFacebookPixel } from "@/lib/pixel";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 
@@ -29,15 +27,11 @@ function trackPurchase(pixelId: string, value: number, phone: string) {
 
 export default function OrderExperience({
 	product,
-	otherProducts,
 	deliveryZones,
-	showRelated,
 	fbPixelId,
 }: {
 	product: Product;
-	otherProducts: Product[];
 	deliveryZones: DeliveryZone[];
-	showRelated: boolean;
 	fbPixelId: string;
 }) {
 	const router = useRouter();
@@ -126,57 +120,6 @@ export default function OrderExperience({
 
 	return (
 		<>
-			{/* Related styles section */}
-			{showRelated && otherProducts.length > 0 ? (
-				<section id="related" className="py-10 sm:py-[60px] bg-white">
-					<div className="container-page text-center">
-						<p className="text-sm font-semibold uppercase tracking-wide text-brand">
-							{content.relatedSection.eyebrow}
-						</p>
-						<h2 className="mt-2 text-2xl font-bold sm:text-3xl text-ink">
-							{content.relatedSection.title}
-						</h2>
-
-						<div className="mt-8 grid grid-cols-2 gap-4 text-left lg:grid-cols-4">
-							{otherProducts.map((other) => (
-								<Link
-									key={other.slug}
-									href={`/products/${other.slug}`}
-									className="overflow-hidden rounded-xl border border-[#E5E5E5] bg-white text-left transition-all hover:border-ink/40"
-								>
-									<Image
-										src={other.images[0]}
-										alt={other.title}
-										width={600}
-										height={750}
-										className="aspect-4/5 w-full object-cover"
-									/>
-									<div className="p-3">
-										<p className="line-clamp-2 text-base font-bold text-ink">
-											{other.title}
-										</p>
-										<div className="mt-1 flex items-center justify-between gap-2">
-											<span className="text-lg font-bold text-brand">
-												{formatPrice(other.price)}
-											</span>
-											<div className="flex gap-1">
-												{other.colors.map((c) => (
-													<span
-														key={c.name}
-														className="h-3 w-3 rounded-full border border-black/10"
-														style={{ background: c.hex }}
-													/>
-												))}
-											</div>
-										</div>
-									</div>
-								</Link>
-							))}
-						</div>
-					</div>
-				</section>
-			) : null}
-
 			{/* 100% Figma Match Checkout Form Section */}
 			<section id="order" className="scroll-mt-10 py-10 sm:py-[60px] bg-[#FDDDCE]">
 				<div className="container-page">
