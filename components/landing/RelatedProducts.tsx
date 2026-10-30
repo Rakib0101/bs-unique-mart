@@ -37,6 +37,7 @@ export default function RelatedProducts({ products }: { products: RelatedProduct
 								alt={other.title}
 								width={600}
 								height={750}
+								sizes="(max-width: 1023px) 45vw, 25vw"
 								className="aspect-4/5 w-full object-cover"
 							/>
 							<div className="p-3">

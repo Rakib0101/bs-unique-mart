@@ -17,6 +17,7 @@ export default function Hero({ product: p }: { product: Product }) {
 						alt="BS Unique Mart"
 						width={391}
 						height={56}
+						sizes="(max-width: 639px) 192px, (max-width: 767px) 224px, 256px"
 						className="mx-auto h-auto w-48 sm:w-56 md:w-64"
 					/>
 					<h1 className="mt-10 text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">

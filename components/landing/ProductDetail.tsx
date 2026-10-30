@@ -17,6 +17,7 @@ export default function ProductDetail({ product: p }: { product: Product }) {
 						}
 						width={900}
 						height={900}
+						sizes="(max-width: 1023px) 100vw, 646px"
 						className="aspect-square w-full object-cover"
 					/>
 				) : null}

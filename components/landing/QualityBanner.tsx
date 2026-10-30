@@ -45,6 +45,7 @@ export default function QualityBanner({
 					alt={title || "Premium Quality Sunglasses"}
 					width={710}
 					height={584}
+					sizes="(max-width: 1023px) 100vw, 658px"
 					className="block w-full object-cover lg:order-last"
 				/>
 			</div>

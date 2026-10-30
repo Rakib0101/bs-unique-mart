@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
         hostname: "*.public.blob.vercel-storage.com",
       },
     ],
+    formats: ["image/avif", "image/webp"],
   },
   experimental: {
     // The only UI library in this codebase -- admin-only (product section
