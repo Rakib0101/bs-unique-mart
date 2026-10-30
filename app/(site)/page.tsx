@@ -17,6 +17,7 @@ export default async function Home() {
       product={flagship}
       otherProducts={otherProducts}
       deliveryZones={settings.deliveryZones}
+      fbPixelId={settings.fbPixelId}
     />
   );
 }

@@ -4,6 +4,7 @@ import content from "@/data/site.json";
 import type { DeliveryZone, Product } from "@/lib/db/schema";
 import { formatPrice, toBanglaDigits } from "@/lib/format";
 import type { OrderPayload } from "@/lib/types";
+import { loadFacebookPixel } from "@/lib/pixel";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,19 +12,19 @@ import { useState, type FormEvent } from "react";
 
 const BD_PHONE_RE = /^01[3-9]\d{8}$/;
 
-type FbqFn = (...args: unknown[]) => void;
-
-function trackPurchase(value: number, phone: string) {
-	if (typeof window === "undefined") return;
-	const w = window as unknown as { fbq?: FbqFn; __FB_PIXEL_ID__?: string };
-	if (!w.fbq || !w.__FB_PIXEL_ID__) return;
+function trackPurchase(pixelId: string, value: number, phone: string) {
+	if (typeof window === "undefined" || !pixelId) return;
+	// A completed order is worth tracking even if neither the interaction
+	// nor idle trigger has loaded the pixel yet -- this call guarantees it's
+	// loaded (idempotent; no-op if it already is) before firing Purchase.
+	loadFacebookPixel(pixelId);
 	// Advanced Matching needs digits-only, country-code-prefixed phone (no
 	// leading 0, no "+") -- e.g. 01712345678 -> 8801712345678. Re-init with
 	// the matching data right before the event, per Meta's manual Advanced
 	// Matching pattern (fbq('set','userData',...) does not apply it here).
 	const phoneForMatching = phone.replace(/\D/g, "").replace(/^0/, "880");
-	w.fbq("init", w.__FB_PIXEL_ID__, { ph: phoneForMatching });
-	w.fbq("track", "Purchase", { value, currency: "BDT" });
+	window.fbq?.("init", pixelId, { ph: phoneForMatching });
+	window.fbq?.("track", "Purchase", { value, currency: "BDT" });
 }
 
 export default function OrderExperience({
@@ -31,11 +32,13 @@ export default function OrderExperience({
 	otherProducts,
 	deliveryZones,
 	showRelated,
+	fbPixelId,
 }: {
 	product: Product;
 	otherProducts: Product[];
 	deliveryZones: DeliveryZone[];
 	showRelated: boolean;
+	fbPixelId: string;
 }) {
 	const router = useRouter();
 	const [size, setSize] = useState(product.sizes[0] ?? "");
@@ -113,7 +116,7 @@ export default function OrderExperience({
 			const data = await res.json();
 			if (!res.ok || !data.ok) throw new Error(data.error || "failed");
 
-			trackPurchase(total, phone.trim());
+			trackPurchase(fbPixelId, total, phone.trim());
 			router.push("/order-success");
 		} catch {
 			setStatus("error");

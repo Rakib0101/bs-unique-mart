@@ -11,10 +11,12 @@ export default function ProductLandingPage({
   product,
   otherProducts,
   deliveryZones,
+  fbPixelId,
 }: {
   product: Product;
   otherProducts: Product[];
   deliveryZones: DeliveryZone[];
+  fbPixelId: string;
 }) {
   const sections = product.sections?.length ? product.sections : DEFAULT_SECTIONS;
 
@@ -43,6 +45,7 @@ export default function ProductLandingPage({
         otherProducts={otherProducts}
         deliveryZones={deliveryZones}
         showRelated={product.showRelatedProducts}
+        fbPixelId={fbPixelId}
       />
       <ScrollToTop />
     </>

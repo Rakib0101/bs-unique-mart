@@ -48,6 +48,7 @@ export default async function ProductPage({
       product={product}
       otherProducts={otherProducts}
       deliveryZones={settings.deliveryZones}
+      fbPixelId={settings.fbPixelId}
     />
   );
 }
