@@ -1,114 +1,39 @@
-import Image from "next/image";
 import Link from "next/link";
-import { getAllProducts, getProductUrl } from "@/lib/products";
-import { formatPrice } from "@/lib/format";
-import { deleteProductAction, setFlagshipAction } from "@/app/admin/actions";
-import ConfirmSubmitButton from "@/components/admin/ConfirmSubmitButton";
+import { getAllProducts } from "@/lib/products";
+import ProductsTable from "@/components/admin/ProductsTable";
 
-export default async function AdminDashboardPage() {
+export default async function AdminProductsPage() {
   const allProducts = await getAllProducts();
 
   return (
-    <div className="px-4 py-8 sm:px-8">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-lg font-bold text-ink">Products</h1>
+    <div className="px-4 py-8 sm:px-8 max-w-7xl mx-auto space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold tracking-tight text-ink">Products Management</h1>
+            <span className="rounded-full bg-surface-muted px-2.5 py-0.5 text-xs font-bold text-ink/60 border border-surface-line">
+              {allProducts.length}
+            </span>
+          </div>
+          <p className="mt-1 text-xs text-ink/60">
+            Create, edit, organize inventory, variants, and configure which product is featured as the storefront flagship.
+          </p>
+        </div>
+
         <Link
           href="/admin/products/new"
-          className="rounded-lg bg-brand px-4 py-2 text-sm font-bold text-white hover:bg-brand-dark"
+          className="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all self-start sm:self-auto"
         >
-          + Add product
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          <span>Add New Product</span>
         </Link>
       </div>
 
-      <div className="mx-auto max-w-5xl">
-        <div className="grid gap-4">
-          {allProducts.map((product) => (
-            <div
-              key={product.id}
-              className="flex items-center gap-4 rounded-xl border border-surface-line bg-white p-4"
-            >
-              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-surface-muted">
-                {product.images[0] ? (
-                  <Image
-                    src={product.images[0]}
-                    alt={product.title}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
-                ) : null}
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="truncate font-bold text-ink">{product.title}</p>
-                  {product.isFlagship ? (
-                    <span className="shrink-0 rounded-full bg-brand/10 px-2 py-0.5 text-xs font-semibold text-brand">
-                      Flagship
-                    </span>
-                  ) : null}
-                </div>
-                <p className="text-sm text-ink/60">{formatPrice(product.price)}</p>
-                <a
-                  href={getProductUrl(product)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="truncate text-xs text-ink/40 hover:text-brand hover:underline"
-                >
-                  {getProductUrl(product)}
-                </a>
-              </div>
-
-              <div className="flex shrink-0 items-center gap-2">
-                {!product.isFlagship ? (
-                  <form action={setFlagshipAction.bind(null, product.id)}>
-                    <button
-                      type="submit"
-                      className="rounded-lg border border-surface-line px-3 py-1.5 text-xs font-medium text-ink/70 hover:bg-surface-muted"
-                    >
-                      Make flagship
-                    </button>
-                  </form>
-                ) : null}
-                <a
-                  href={getProductUrl(product)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg border border-surface-line px-3 py-1.5 text-xs font-medium text-ink/70 hover:bg-surface-muted"
-                >
-                  Preview ↗
-                </a>
-                <Link
-                  href={`/admin/products/${product.id}`}
-                  className="rounded-lg border border-surface-line px-3 py-1.5 text-xs font-medium text-ink/70 hover:bg-surface-muted"
-                >
-                  View
-                </Link>
-                <Link
-                  href={`/admin/products/${product.id}/edit`}
-                  className="rounded-lg border border-surface-line px-3 py-1.5 text-xs font-medium text-ink hover:bg-surface-muted"
-                >
-                  Edit
-                </Link>
-                <form action={deleteProductAction.bind(null, product.id)}>
-                  <ConfirmSubmitButton
-                    confirmMessage="Delete this product? This cannot be undone."
-                    className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
-                  >
-                    Delete
-                  </ConfirmSubmitButton>
-                </form>
-              </div>
-            </div>
-          ))}
-
-          {allProducts.length === 0 ? (
-            <p className="py-12 text-center text-sm text-ink/50">
-              No products yet. Click &ldquo;Add product&rdquo; to create your first one.
-            </p>
-          ) : null}
-        </div>
-      </div>
+      {/* Products Table with Pagination & Filters */}
+      <ProductsTable products={allProducts} />
     </div>
   );
 }
