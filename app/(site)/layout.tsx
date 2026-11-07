@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
-import FacebookPixel from "@/components/FacebookPixel";
+import MarketingScripts from "@/components/MarketingScripts";
+import UtmCapture from "@/components/landing/UtmCapture";
 import content from "@/data/site.json";
 import { getSiteSettings } from "@/lib/settings";
 import { darken } from "@/lib/color";
@@ -92,7 +93,13 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         address={settings.address}
         facebookUrl={settings.facebookUrl}
       />
-      {settings.fbPixelId ? <FacebookPixel pixelId={settings.fbPixelId} /> : null}
+      <MarketingScripts
+        fbPixelId={settings.fbPixelId}
+        tiktokPixelId={settings.tiktokPixelId}
+        ga4MeasurementId={settings.ga4MeasurementId}
+        gtmContainerId={settings.gtmContainerId}
+      />
+      <UtmCapture />
     </div>
   );
 }

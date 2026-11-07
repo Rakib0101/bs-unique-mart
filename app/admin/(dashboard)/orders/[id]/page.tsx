@@ -61,7 +61,7 @@ export default async function OrderDetailPage({
           </div>
         </section>
 
-        <section className="rounded-xl border border-surface-line bg-white p-6">
+        <section className="mb-5 rounded-xl border border-surface-line bg-white p-6">
           <h2 className="mb-4 font-bold text-ink">Customer</h2>
           <div className="divide-y divide-surface-line">
             <Row label="Name" value={order.customerName} />
@@ -69,6 +69,17 @@ export default async function OrderDetailPage({
             <Row label="Address" value={order.customerAddress} />
           </div>
         </section>
+
+        {order.utmSource ? (
+          <section className="rounded-xl border border-surface-line bg-white p-6">
+            <h2 className="mb-4 font-bold text-ink">Attribution</h2>
+            <div className="divide-y divide-surface-line">
+              <Row label="Source" value={order.utmSource} />
+              {order.utmMedium ? <Row label="Medium" value={order.utmMedium} /> : null}
+              {order.utmCampaign ? <Row label="Campaign" value={order.utmCampaign} /> : null}
+            </div>
+          </section>
+        ) : null}
       </div>
     </div>
   );

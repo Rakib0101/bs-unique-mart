@@ -100,6 +100,13 @@ export interface OrderPayload {
 	name: string;
 	phone: string;
 	address: string;
+	/** Which ad/campaign the visitor arrived from, if any. */
+	utmSource: string;
+	utmMedium: string;
+	utmCampaign: string;
+	/** Shared with the client-side Purchase pixel event for dedup against the
+	 *  server-side Meta Conversions API call. */
+	eventId: string;
 	/** Hidden field — filled means a bot filled the form. */
 	honeypot: string;
 }

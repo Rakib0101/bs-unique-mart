@@ -57,6 +57,8 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
         const addressMatch = o.customerAddress.toLowerCase().includes(q);
         const sizeMatch = o.size?.toLowerCase().includes(q);
         const colorMatch = o.color?.toLowerCase().includes(q);
+        const sourceMatch = o.utmSource?.toLowerCase().includes(q);
+        const campaignMatch = o.utmCampaign?.toLowerCase().includes(q);
         return (
           idMatch ||
           nameMatch ||
@@ -64,7 +66,9 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
           productMatch ||
           addressMatch ||
           sizeMatch ||
-          colorMatch
+          colorMatch ||
+          sourceMatch ||
+          campaignMatch
         );
       });
     }
@@ -235,6 +239,7 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
                 <th className="whitespace-nowrap px-4 py-3.5">Date</th>
                 <th className="whitespace-nowrap px-4 py-3.5">Customer</th>
                 <th className="whitespace-nowrap px-4 py-3.5">Product & Details</th>
+                <th className="whitespace-nowrap px-4 py-3.5">Source</th>
                 <th className="whitespace-nowrap px-4 py-3.5 text-center">Qty</th>
                 <th className="whitespace-nowrap px-4 py-3.5">Total Amount</th>
                 <th className="whitespace-nowrap px-4 py-3.5">Status</th>
@@ -296,6 +301,24 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
                           )}
                         </div>
                       </div>
+                    </td>
+
+                    {/* Attribution */}
+                    <td className="whitespace-nowrap px-4 py-3.5">
+                      {order.utmSource ? (
+                        <div className="min-w-[90px]">
+                          <span className="rounded-md bg-surface-muted px-1.5 py-0.5 font-medium border border-surface-line text-[11px] text-ink/70">
+                            {order.utmSource}
+                          </span>
+                          {order.utmCampaign ? (
+                            <p className="mt-0.5 max-w-[140px] truncate text-[10px] text-ink/40" title={order.utmCampaign}>
+                              {order.utmCampaign}
+                            </p>
+                          ) : null}
+                        </div>
+                      ) : (
+                        <span className="text-ink/30">Direct</span>
+                      )}
                     </td>
 
                     {/* Qty */}

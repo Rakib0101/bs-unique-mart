@@ -3,38 +3,30 @@
 import type { DeliveryZone, Product } from "@/lib/db/schema";
 import { toBanglaDigits } from "@/lib/format";
 import type { OrderPayload } from "@/lib/types";
-import { loadFacebookPixel } from "@/lib/pixel";
+import { trackInitiateCheckout, trackPurchase, type MarketingIds } from "@/lib/marketingEvents";
+import { getStoredUtmParams } from "@/lib/utm";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 const BD_PHONE_RE = /^01[3-9]\d{8}$/;
-
-function trackPurchase(pixelId: string, value: number, phone: string) {
-	if (typeof window === "undefined" || !pixelId) return;
-	// A completed order is worth tracking even if neither the interaction
-	// nor idle trigger has loaded the pixel yet -- this call guarantees it's
-	// loaded (idempotent; no-op if it already is) before firing Purchase.
-	loadFacebookPixel(pixelId);
-	// Advanced Matching needs digits-only, country-code-prefixed phone (no
-	// leading 0, no "+") -- e.g. 01712345678 -> 8801712345678. Re-init with
-	// the matching data right before the event, per Meta's manual Advanced
-	// Matching pattern (fbq('set','userData',...) does not apply it here).
-	const phoneForMatching = phone.replace(/\D/g, "").replace(/^0/, "880");
-	window.fbq?.("init", pixelId, { ph: phoneForMatching });
-	window.fbq?.("track", "Purchase", { value, currency: "BDT" });
-}
 
 export default function OrderExperience({
 	product,
 	deliveryZones,
 	fbPixelId,
+	tiktokPixelId,
+	ga4MeasurementId,
 }: {
 	product: Product;
 	deliveryZones: DeliveryZone[];
 	fbPixelId: string;
+	tiktokPixelId: string;
+	ga4MeasurementId: string;
 }) {
 	const router = useRouter();
+	const marketingIds: MarketingIds = { fbPixelId, tiktokPixelId, ga4MeasurementId };
+	const initiateCheckoutFired = useRef(false);
 	const [size, setSize] = useState(product.sizes[0] ?? "");
 	const [color, setColor] = useState(product.colors[0]?.name ?? "");
 	const selectedColorIndex = product.colors.findIndex((c) => c.name === color);
@@ -85,6 +77,9 @@ export default function OrderExperience({
 		setStatus("submitting");
 		setErrorMsg(null);
 
+		const eventId = crypto.randomUUID();
+		const utm = getStoredUtmParams();
+
 		const payload: OrderPayload = {
 			productSlug: product.slug,
 			productTitle: product.title,
@@ -98,6 +93,10 @@ export default function OrderExperience({
 			name: name.trim(),
 			phone: phone.trim(),
 			address: `${address.trim()}${email.trim() ? ` (ইমেইল: ${email.trim()})` : ""}`,
+			utmSource: utm.utmSource,
+			utmMedium: utm.utmMedium,
+			utmCampaign: utm.utmCampaign,
+			eventId,
 			honeypot,
 		};
 
@@ -110,7 +109,7 @@ export default function OrderExperience({
 			const data = await res.json();
 			if (!res.ok || !data.ok) throw new Error(data.error || "failed");
 
-			trackPurchase(fbPixelId, total, phone.trim());
+			trackPurchase(marketingIds, total, phone.trim(), eventId);
 			router.push("/order-success");
 		} catch {
 			setStatus("error");
@@ -125,6 +124,11 @@ export default function OrderExperience({
 				<div className="container-page">
 					<form
 						onSubmit={handleSubmit}
+						onFocus={() => {
+							if (initiateCheckoutFired.current) return;
+							initiateCheckoutFired.current = true;
+							trackInitiateCheckout(marketingIds, total);
+						}}
 						className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 items-start"
 					>
 						{/* Left Column: 2 Cards */}

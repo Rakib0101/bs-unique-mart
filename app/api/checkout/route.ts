@@ -20,7 +20,19 @@ export async function POST(request: Request) {
     return Response.json({ ok: true });
   }
 
-  const { productSlug, size, color, qty, name, phone, address, deliveryZoneLabel } = payload;
+  const {
+    productSlug,
+    size,
+    color,
+    qty,
+    name,
+    phone,
+    address,
+    deliveryZoneLabel,
+    utmSource,
+    utmMedium,
+    utmCampaign,
+  } = payload;
 
   // Re-derive price and delivery charge from the known catalog/zones rather
   // than trusting whatever the client sent — closes client-side price tampering.
@@ -78,6 +90,9 @@ export async function POST(request: Request) {
       customerName: name.trim(),
       customerPhone: phone.trim(),
       customerAddress: address.trim(),
+      utmSource: utmSource?.trim() || "",
+      utmMedium: utmMedium?.trim() || "",
+      utmCampaign: utmCampaign?.trim() || "",
     });
   } catch (err) {
     console.error("Checkout: failed to save order record to database:", err);
@@ -113,6 +128,9 @@ export async function POST(request: Request) {
           name: name.trim(),
           phone: phone.trim(),
           address: address.trim(),
+          utmSource: utmSource?.trim() || "",
+          utmMedium: utmMedium?.trim() || "",
+          utmCampaign: utmCampaign?.trim() || "",
         }),
       });
 

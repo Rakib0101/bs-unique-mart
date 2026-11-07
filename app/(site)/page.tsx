@@ -18,6 +18,8 @@ export default async function Home() {
       otherProducts={otherProducts}
       deliveryZones={settings.deliveryZones}
       fbPixelId={settings.fbPixelId}
+      tiktokPixelId={settings.tiktokPixelId}
+      ga4MeasurementId={settings.ga4MeasurementId}
     />
   );
 }

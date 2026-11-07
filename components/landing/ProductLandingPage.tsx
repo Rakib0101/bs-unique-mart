@@ -13,11 +13,15 @@ export default function ProductLandingPage({
   otherProducts,
   deliveryZones,
   fbPixelId,
+  tiktokPixelId,
+  ga4MeasurementId,
 }: {
   product: Product;
   otherProducts: Product[];
   deliveryZones: DeliveryZone[];
   fbPixelId: string;
+  tiktokPixelId: string;
+  ga4MeasurementId: string;
 }) {
   const sections = product.sections?.length ? product.sections : DEFAULT_SECTIONS;
 
@@ -42,7 +46,13 @@ export default function ProductLandingPage({
       <Hero product={product} />
       {sections.filter((s) => s.visible).map((s) => renderers[s.type]())}
       {product.showRelatedProducts ? <RelatedProducts products={otherProducts} /> : null}
-      <OrderExperience product={product} deliveryZones={deliveryZones} fbPixelId={fbPixelId} />
+      <OrderExperience
+        product={product}
+        deliveryZones={deliveryZones}
+        fbPixelId={fbPixelId}
+        tiktokPixelId={tiktokPixelId}
+        ga4MeasurementId={ga4MeasurementId}
+      />
       <ScrollToTop />
     </>
   );
