@@ -63,14 +63,6 @@ export default function SettingsForm({
             title="Integrations"
             description="Connect or disconnect without touching code."
           />
-          <Field label="Facebook Pixel ID">
-            <input
-              name="fbPixelId"
-              placeholder="Leave blank to disable"
-              defaultValue={settings.fbPixelId}
-              className={`${inputCls} w-full`}
-            />
-          </Field>
           <Field label="Google Sheets webhook URL">
             <input
               name="googleSheetsWebhookUrl"
@@ -88,6 +80,66 @@ export default function SettingsForm({
               className={`${inputCls} w-full`}
             />
           </Field>
+        </section>
+
+        <section className="space-y-4 rounded-xl border border-surface-line bg-white p-5 lg:col-span-2">
+          <SectionHeader
+            title="Marketing & analytics"
+            description="Ad pixels and analytics load only after a visitor interacts with the page, so they never slow down the first load. Leave any field blank to disable it."
+          />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Facebook Pixel ID">
+              <input
+                name="fbPixelId"
+                placeholder="Leave blank to disable"
+                defaultValue={settings.fbPixelId}
+                className={`${inputCls} w-full`}
+              />
+            </Field>
+            <Field label="Meta Conversions API access token">
+              <input
+                name="metaCapiAccessToken"
+                type="password"
+                placeholder={settings.metaCapiAccessToken ? "••••••••" : "Leave blank to disable"}
+                defaultValue={settings.metaCapiAccessToken}
+                className={`${inputCls} w-full`}
+              />
+              <p className="mt-1 text-xs text-ink/50">
+                Sends Purchase events directly from the server as a backup to
+                the browser pixel. Requires a Facebook Pixel ID above. Get
+                this from Events Manager → your pixel → Settings →
+                Conversions API → &quot;Generate access token&quot;.
+              </p>
+            </Field>
+            <Field label="TikTok Pixel ID">
+              <input
+                name="tiktokPixelId"
+                placeholder="Leave blank to disable"
+                defaultValue={settings.tiktokPixelId}
+                className={`${inputCls} w-full`}
+              />
+            </Field>
+            <Field label="Google Analytics 4 measurement ID">
+              <input
+                name="ga4MeasurementId"
+                placeholder="G-XXXXXXXXXX"
+                defaultValue={settings.ga4MeasurementId}
+                className={`${inputCls} w-full`}
+              />
+            </Field>
+            <Field label="Google Tag Manager container ID">
+              <input
+                name="gtmContainerId"
+                placeholder="GTM-XXXXXXX"
+                defaultValue={settings.gtmContainerId}
+                className={`${inputCls} w-full`}
+              />
+              <p className="mt-1 text-xs text-ink/50">
+                Optional — lets you add other tracking tags yourself later
+                without needing a code change.
+              </p>
+            </Field>
+          </div>
         </section>
 
         <section className="space-y-3 rounded-xl border border-surface-line bg-white p-5">

@@ -444,6 +444,14 @@ export async function updateSettingsAction(formData: FormData) {
 	const facebookUrl = String(formData.get("facebookUrl") || "").trim();
 	const primaryColor = String(formData.get("primaryColor") || "").trim();
 	const fbPixelId = String(formData.get("fbPixelId") || "").trim();
+	const metaCapiAccessToken = String(
+		formData.get("metaCapiAccessToken") || "",
+	).trim();
+	const tiktokPixelId = String(formData.get("tiktokPixelId") || "").trim();
+	const ga4MeasurementId = String(
+		formData.get("ga4MeasurementId") || "",
+	).trim();
+	const gtmContainerId = String(formData.get("gtmContainerId") || "").trim();
 	const googleSheetsWebhookUrl = String(
 		formData.get("googleSheetsWebhookUrl") || "",
 	).trim();
@@ -475,6 +483,10 @@ export async function updateSettingsAction(formData: FormData) {
 		faviconUrl,
 		primaryColor: primaryColor || "#d51a31",
 		fbPixelId,
+		metaCapiAccessToken,
+		tiktokPixelId,
+		ga4MeasurementId,
+		gtmContainerId,
 		googleSheetsWebhookUrl,
 		googleSheetsWebhookSecret,
 	});
