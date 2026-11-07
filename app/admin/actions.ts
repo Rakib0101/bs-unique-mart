@@ -447,11 +447,15 @@ export async function updateSettingsAction(formData: FormData) {
 	const metaCapiAccessToken = String(
 		formData.get("metaCapiAccessToken") || "",
 	).trim();
+	const metaCapiTestEventCode = String(
+		formData.get("metaCapiTestEventCode") || "",
+	).trim();
 	const tiktokPixelId = String(formData.get("tiktokPixelId") || "").trim();
 	const ga4MeasurementId = String(
 		formData.get("ga4MeasurementId") || "",
 	).trim();
 	const gtmContainerId = String(formData.get("gtmContainerId") || "").trim();
+	const clarityProjectId = String(formData.get("clarityProjectId") || "").trim();
 	const googleSheetsWebhookUrl = String(
 		formData.get("googleSheetsWebhookUrl") || "",
 	).trim();
@@ -484,9 +488,11 @@ export async function updateSettingsAction(formData: FormData) {
 		primaryColor: primaryColor || "#d51a31",
 		fbPixelId,
 		metaCapiAccessToken,
+		metaCapiTestEventCode,
 		tiktokPixelId,
 		ga4MeasurementId,
 		gtmContainerId,
+		clarityProjectId,
 		googleSheetsWebhookUrl,
 		googleSheetsWebhookSecret,
 	});

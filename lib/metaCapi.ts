@@ -17,6 +17,7 @@ function sha256(value: string): string {
 export async function sendMetaPurchaseEvent({
 	pixelId,
 	accessToken,
+	testEventCode,
 	eventId,
 	value,
 	phone,
@@ -28,6 +29,8 @@ export async function sendMetaPurchaseEvent({
 }: {
 	pixelId: string;
 	accessToken: string;
+	/** Temporary debug code from Events Manager -> Test Events; omit once verified. */
+	testEventCode?: string;
 	eventId: string;
 	value: number;
 	phone: string;
@@ -51,7 +54,7 @@ export async function sendMetaPurchaseEvent({
 	if (fbp) userData.fbp = fbp;
 	if (fbc) userData.fbc = fbc;
 
-	const body = {
+	const body: Record<string, unknown> = {
 		data: [
 			{
 				event_name: "Purchase",
@@ -67,6 +70,7 @@ export async function sendMetaPurchaseEvent({
 			},
 		],
 	};
+	if (testEventCode) body.test_event_code = testEventCode;
 
 	try {
 		const res = await fetch(

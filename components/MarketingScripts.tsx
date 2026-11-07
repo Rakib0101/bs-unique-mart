@@ -5,6 +5,7 @@ import { loadFacebookPixel } from "@/lib/pixel";
 import { loadTikTokPixel } from "@/lib/tiktok";
 import { loadGA4 } from "@/lib/ga4";
 import { loadGTM } from "@/lib/gtm";
+import { loadClarity } from "@/lib/clarity";
 
 const IMMEDIATE_TRIGGER_EVENTS = ["pointerdown", "keydown", "touchstart"] as const;
 // The homepage auto-scrolls to the checkout section ~400ms after load (see
@@ -25,14 +26,16 @@ export default function MarketingScripts({
 	tiktokPixelId,
 	ga4MeasurementId,
 	gtmContainerId,
+	clarityProjectId,
 }: {
 	fbPixelId: string;
 	tiktokPixelId: string;
 	ga4MeasurementId: string;
 	gtmContainerId: string;
+	clarityProjectId: string;
 }) {
 	useEffect(() => {
-		if (!fbPixelId && !tiktokPixelId && !ga4MeasurementId && !gtmContainerId) return;
+		if (!fbPixelId && !tiktokPixelId && !ga4MeasurementId && !gtmContainerId && !clarityProjectId) return;
 
 		let settled = false;
 		let idleCallbackId: number | undefined;
@@ -45,6 +48,7 @@ export default function MarketingScripts({
 			if (tiktokPixelId) loadTikTokPixel(tiktokPixelId);
 			if (ga4MeasurementId) loadGA4(ga4MeasurementId);
 			if (gtmContainerId) loadGTM(gtmContainerId);
+			if (clarityProjectId) loadClarity(clarityProjectId);
 			allEvents.forEach((evt) => window.removeEventListener(evt, loadAll));
 			clearTimeout(scrollListenerTimer);
 			clearTimeout(fallbackTimer);
@@ -75,7 +79,7 @@ export default function MarketingScripts({
 				window.cancelIdleCallback(idleCallbackId);
 			}
 		};
-	}, [fbPixelId, tiktokPixelId, ga4MeasurementId, gtmContainerId]);
+	}, [fbPixelId, tiktokPixelId, ga4MeasurementId, gtmContainerId, clarityProjectId]);
 
 	return null;
 }

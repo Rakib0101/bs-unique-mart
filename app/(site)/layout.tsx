@@ -98,6 +98,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         tiktokPixelId={settings.tiktokPixelId}
         ga4MeasurementId={settings.ga4MeasurementId}
         gtmContainerId={settings.gtmContainerId}
+        clarityProjectId={settings.clarityProjectId}
       />
       <UtmCapture />
     </div>

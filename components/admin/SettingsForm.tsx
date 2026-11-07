@@ -111,6 +111,20 @@ export default function SettingsForm({
                 Conversions API → &quot;Generate access token&quot;.
               </p>
             </Field>
+            <Field label="Meta test event code">
+              <input
+                name="metaCapiTestEventCode"
+                placeholder="Leave blank once verified"
+                defaultValue={settings.metaCapiTestEventCode}
+                className={`${inputCls} w-full`}
+              />
+              <p className="mt-1 text-xs text-ink/50">
+                Temporary — paste the code from Events Manager → Test Events
+                to see server-side orders arrive there live while verifying.
+                Clear it once confirmed working; it only affects the Test
+                Events view, not real ad reporting.
+              </p>
+            </Field>
             <Field label="TikTok Pixel ID">
               <input
                 name="tiktokPixelId"
@@ -137,6 +151,19 @@ export default function SettingsForm({
               <p className="mt-1 text-xs text-ink/50">
                 Optional — lets you add other tracking tags yourself later
                 without needing a code change.
+              </p>
+            </Field>
+            <Field label="Microsoft Clarity project ID">
+              <input
+                name="clarityProjectId"
+                placeholder="Leave blank to disable"
+                defaultValue={settings.clarityProjectId}
+                className={`${inputCls} w-full`}
+              />
+              <p className="mt-1 text-xs text-ink/50">
+                Free session recordings and heatmaps — see how visitors
+                actually scroll, click, and read the page, not just whether
+                they bought. Get the ID from clarity.microsoft.com.
               </p>
             </Field>
           </div>

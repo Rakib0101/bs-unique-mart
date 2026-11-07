@@ -117,6 +117,7 @@ export async function POST(request: Request) {
     await sendMetaPurchaseEvent({
       pixelId: settings.fbPixelId,
       accessToken: settings.metaCapiAccessToken,
+      testEventCode: settings.metaCapiTestEventCode || undefined,
       eventId,
       value: totalPrice,
       phone: phone.trim(),

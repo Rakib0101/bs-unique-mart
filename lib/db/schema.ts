@@ -128,9 +128,16 @@ export const siteSettings = pgTable("site_settings", {
   // don't hide real orders from Meta. Generated in Events Manager -> pixel ->
   // Settings -> Conversions API -> "Generate access token".
   metaCapiAccessToken: text("meta_capi_access_token").notNull().default(""),
+  // Temporary code from Events Manager -> Test Events, used to verify CAPI
+  // events arrive live while setting up/debugging. Meant to be cleared once
+  // verified -- events tagged with it show in the Test Events view only.
+  metaCapiTestEventCode: varchar("meta_capi_test_event_code", { length: 64 }).notNull().default(""),
   tiktokPixelId: varchar("tiktok_pixel_id", { length: 64 }).notNull().default(""),
   ga4MeasurementId: varchar("ga4_measurement_id", { length: 32 }).notNull().default(""),
   gtmContainerId: varchar("gtm_container_id", { length: 32 }).notNull().default(""),
+  // Microsoft Clarity -- free session recordings + heatmaps, separate from
+  // conversion tracking above (shows HOW visitors behave, not just events).
+  clarityProjectId: varchar("clarity_project_id", { length: 32 }).notNull().default(""),
   googleSheetsWebhookUrl: text("google_sheets_webhook_url").notNull(),
   googleSheetsWebhookSecret: varchar("google_sheets_webhook_secret", { length: 255 }).notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
