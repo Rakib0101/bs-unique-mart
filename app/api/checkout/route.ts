@@ -2,8 +2,15 @@ import type { OrderPayload } from "@/lib/types";
 import { getProductBySlug } from "@/lib/products";
 import { getSiteSettings } from "@/lib/settings";
 import { createOrder } from "@/lib/orders";
+import { sendMetaPurchaseEvent } from "@/lib/metaCapi";
 
 const BD_PHONE_RE = /^01[3-9]\d{8}$/;
+
+function readCookie(cookieHeader: string | null, name: string): string | null {
+  if (!cookieHeader) return null;
+  const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${name}=([^;]+)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
 export async function POST(request: Request) {
   let payload: OrderPayload;
@@ -32,6 +39,7 @@ export async function POST(request: Request) {
     utmSource,
     utmMedium,
     utmCampaign,
+    eventId,
   } = payload;
 
   // Re-derive price and delivery charge from the known catalog/zones rather
@@ -100,6 +108,24 @@ export async function POST(request: Request) {
       { error: "Failed to place order. Please try again." },
       { status: 500 },
     );
+  }
+
+  // Meta Conversions API is an optional backup to the browser pixel — same
+  // best-effort treatment: never block or fail the order over it.
+  if (settings.fbPixelId && settings.metaCapiAccessToken) {
+    const cookieHeader = request.headers.get("cookie");
+    await sendMetaPurchaseEvent({
+      pixelId: settings.fbPixelId,
+      accessToken: settings.metaCapiAccessToken,
+      eventId,
+      value: totalPrice,
+      phone: phone.trim(),
+      clientIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null,
+      userAgent: request.headers.get("user-agent"),
+      fbp: readCookie(cookieHeader, "_fbp"),
+      fbc: readCookie(cookieHeader, "_fbc"),
+      eventSourceUrl: request.headers.get("referer") || "https://bsuniquemart.com/",
+    });
   }
 
   // Google Sheets sync is an optional integration (Admin → Settings: "Leave
