@@ -7,6 +7,7 @@ import StatTile from "@/components/admin/StatTile";
 import OrdersBarChart from "@/components/admin/OrdersBarChart";
 import OrderStatusDonut from "@/components/admin/OrderStatusDonut";
 import FulfillmentMeter from "@/components/admin/FulfillmentMeter";
+import CampaignBreakdown from "@/components/admin/CampaignBreakdown";
 
 const STATUS_PILL: Record<string, string> = {
   pending: "bg-amber-500/10 text-amber-700 border border-amber-200",
@@ -84,6 +85,9 @@ export default async function AdminOverviewPage() {
             <OrderStatusDonut counts={stats.statusCounts} />
           </div>
         </div>
+
+        {/* Marketing Attribution */}
+        <CampaignBreakdown stats={stats.campaignStats} />
 
         {/* Recent Orders Card */}
         <section className="rounded-2xl border border-surface-line bg-white p-5 shadow-xs">
