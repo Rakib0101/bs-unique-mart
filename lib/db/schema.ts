@@ -98,6 +98,12 @@ export const orders = pgTable("orders", {
   customerPhone: varchar("customer_phone", { length: 32 }).notNull(),
   customerAddress: text("customer_address").notNull(),
   status: orderStatusEnum("status").notNull().default("pending"),
+  // Attribution -- captured from the landing URL's utm_* params, if any,
+  // so the admin can see which ad/campaign actually produced an order
+  // independent of what the ad platform itself reports.
+  utmSource: varchar("utm_source", { length: 128 }).notNull().default(""),
+  utmMedium: varchar("utm_medium", { length: 128 }).notNull().default(""),
+  utmCampaign: varchar("utm_campaign", { length: 128 }).notNull().default(""),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
@@ -117,6 +123,14 @@ export const siteSettings = pgTable("site_settings", {
   faviconUrl: text("favicon_url").notNull(),
   primaryColor: varchar("primary_color", { length: 7 }).notNull().default("#d51a31"),
   fbPixelId: varchar("fb_pixel_id", { length: 64 }).notNull(),
+  // Server-side Meta Conversions API -- sends the same events as the browser
+  // pixel directly from the backend, so ad blockers/iOS privacy settings
+  // don't hide real orders from Meta. Generated in Events Manager -> pixel ->
+  // Settings -> Conversions API -> "Generate access token".
+  metaCapiAccessToken: text("meta_capi_access_token").notNull().default(""),
+  tiktokPixelId: varchar("tiktok_pixel_id", { length: 64 }).notNull().default(""),
+  ga4MeasurementId: varchar("ga4_measurement_id", { length: 32 }).notNull().default(""),
+  gtmContainerId: varchar("gtm_container_id", { length: 32 }).notNull().default(""),
   googleSheetsWebhookUrl: text("google_sheets_webhook_url").notNull(),
   googleSheetsWebhookSecret: varchar("google_sheets_webhook_secret", { length: 255 }).notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
