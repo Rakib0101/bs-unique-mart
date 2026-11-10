@@ -63,6 +63,11 @@ const baseMetadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  verification: {
+    other: {
+      "facebook-domain-verification": "a9gr6u5do1tvqif183nzpt9f886hmm",
+    },
+  },
   openGraph: {
     type: "website",
     locale: "bn_BD",
